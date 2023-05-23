@@ -1,0 +1,55 @@
+PODS:
+  - Alamofire (5.7.1)
+  - GRDB.swift (5.24.1):
+    - GRDB.swift/standard (= 5.24.1)
+  - GRDB.swift/standard (5.24.1)
+  - HandyJSON (5.0.4-beta)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
+  - RxCocoa (5.1.3):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.3):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.3)
+  - TGSPublic (0.1.0):
+    - Alamofire (~> 5.0)
+    - GRDB.swift (~> 5.24.0)
+    - HandyJSON (= 5.0.4-beta)
+    - Moya/RxSwift (~> 14.0)
+    - RxCocoa (~> 5)
+    - RxSwift (~> 5)
+
+DEPENDENCIES:
+  - TGSPublic (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - GRDB.swift
+    - HandyJSON
+    - Moya
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+
+EXTERNAL SOURCES:
+  TGSPublic:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  GRDB.swift: b3180ce2135fc06a453297889b746b1478c4d8c7
+  HandyJSON: a9c67202df97805a0ba4a00e30b50e9a30ac28f3
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
+  RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
+  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  TGSPublic: ebfbee052a4bc05275667c9905278cefb0910c74
+
+PODFILE CHECKSUM: 61598e6790dd1678f20da44dbb3b33910e8e4bad
+
+COCOAPODS: 1.11.3
