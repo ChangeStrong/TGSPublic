@@ -15,19 +15,12 @@
     "git": "https://github.com/ChangeStrong/TGSPublic.git",
     "tag": "0.1.0"
   },
+  "swift_versions": "5.0",
   "platforms": {
     "ios": "13.0"
   },
   "source_files": "TGSPublic/Classes/**/*.{h,m,mm,swift}",
-  "public_header_files": "Pod/Classes/**/*.h",
-  "frameworks": [
-    "UIKit",
-    "MapKit",
-    "Foundation",
-    "AVFoundation",
-    "CommonCrypto",
-    "WebKit"
-  ],
+  "public_header_files": "TGSPublic/Classes/**/*.h",
   "dependencies": {
     "Alamofire": [
       "~> 5.0"
@@ -42,10 +35,17 @@
       "~> 14.0"
     ],
     "HandyJSON": [
-      "5.0.4-beta"
+      "5.0.2"
     ],
     "GRDB.swift": [
       "~> 5.24.0"
+    ],
+    "ProgressHUD": [
+
+    ],
+    "SnapKit": [
+
     ]
-  }
+  },
+  "swift_version": "5.0"
 }

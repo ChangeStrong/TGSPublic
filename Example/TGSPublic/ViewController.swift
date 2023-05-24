@@ -8,13 +8,14 @@
 
 import UIKit
 import TGSPublic
-class ViewController: UIViewController {
+class ViewController: TGBaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         if TGAppEnviroment == 1{
-            
+            let tempStr = "".urlEncodeOnlyUTF8()
+           
         }
     }
 

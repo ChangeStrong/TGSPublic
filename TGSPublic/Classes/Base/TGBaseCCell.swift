@@ -7,9 +7,9 @@
 
 import UIKit
 
-class TGBaseCCell: UICollectionViewCell {
+open class TGBaseCCell: UICollectionViewCell {
     
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         windowSizeDidChangeAction()
     }

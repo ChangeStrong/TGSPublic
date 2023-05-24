@@ -8,16 +8,16 @@
 
 import UIKit
 
-class TGBaseNavigationVC: UINavigationController {
+open class TGBaseNavigationVC: UINavigationController {
 //   weak var tabbarVC:TGPostTabbarVC?
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
    
-    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+    open override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         if children.count >= 1 {
             //隐藏tabbar
             viewController.hidesBottomBarWhenPushed = true
@@ -34,21 +34,21 @@ class TGBaseNavigationVC: UINavigationController {
     }
     
     //屏幕旋转
-    override var shouldAutorotate: Bool{
+    open override var shouldAutorotate: Bool{
         if self.topViewController != nil {
             return self.topViewController!.shouldAutorotate
         }
         return false;
     }
     
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+    open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         if self.topViewController != nil {
             return self.topViewController!.preferredInterfaceOrientationForPresentation
         }
         return .portrait
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
         if self.topViewController != nil {
             return self.topViewController!.supportedInterfaceOrientations
         }

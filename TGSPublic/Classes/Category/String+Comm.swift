@@ -8,11 +8,11 @@
 
 import Foundation
 let KUrlCodingReservedCharacters = "!*'();:|@&=+$,/?%#[]{}"
-extension String{
+public extension String{
     /// url编码
     ///
     /// - Returns: NSString
-    func urlEncode() -> String? {
+   public func urlEncode() -> String? {
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: KUrlCodingReservedCharacters).inverted)
         
     }

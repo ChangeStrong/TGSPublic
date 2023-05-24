@@ -27,7 +27,7 @@ TODO: Add long description of the pod here.
   s.author           = { 'ChangeStrong' => '491337430@qq.com' }
   s.source           = { :git => 'https://github.com/ChangeStrong/TGSPublic.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
+  s.swift_version           = '5.0'
   s.ios.deployment_target = '13.0'
 
   s.source_files = 'TGSPublic/Classes/**/*.{h,m,mm,swift}'
@@ -36,14 +36,19 @@ TODO: Add long description of the pod here.
   #   'TGSPublic' => ['TGSPublic/Assets/*.png']
   # }
 
-   s.public_header_files = 'Pod/Classes/**/*.h'
-   s.frameworks = 'UIKit', 'MapKit', 'Foundation', 'AVFoundation', 'CommonCrypto', 'WebKit'
+   s.public_header_files = 'TGSPublic/Classes/**/*.h'
+   #s.frameworks = 'UIKit', 'MapKit', 'Foundation', 'AVFoundation', 'WebKit', 'Security'
+   #s.libraries = 'commonCryptor'
+  # s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libcommonCrypto' }
+  
+
   # s.dependency 'AFNetworking', '~> 2.3'
    s.dependency 'Alamofire', '~> 5.0'
    s.dependency 'RxSwift', '~> 5'
    s.dependency 'RxCocoa', '~> 5'
    s.dependency 'Moya/RxSwift', '~> 14.0'
-   s.dependency 'HandyJSON', '5.0.4-beta'
-   #swift 数据库
+   s.dependency 'HandyJSON', '5.0.2'
    s.dependency 'GRDB.swift', '~> 5.24.0'
+   s.dependency 'ProgressHUD'
+   s.dependency 'SnapKit'
 end

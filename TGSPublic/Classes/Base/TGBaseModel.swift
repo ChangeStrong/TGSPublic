@@ -9,12 +9,12 @@
 import UIKit
 import HandyJSON
 
-class TGBaseModel: NSObject,HandyJSON,Codable {
+open class TGBaseModel: NSObject,HandyJSON,Codable {
     required public override init() {}
     
     //json转模型时
     var descriptioN:String?
-    func mapping(mapper: HelpingMapper) {
+    open func mapping(mapper: HelpingMapper) {
             // specify 'cat_id' field in json map to 'id' property in object
             mapper <<<
                 self.descriptioN <-- "description"

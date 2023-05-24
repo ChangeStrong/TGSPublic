@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TGBaseView: UIView {
+open class TGBaseView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -16,7 +16,7 @@ class TGBaseView: UIView {
         // Drawing code
     }
     */
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         windowSizeDidChangeAction()
     }

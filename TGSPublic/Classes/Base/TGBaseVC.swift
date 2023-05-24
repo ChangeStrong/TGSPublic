@@ -9,7 +9,8 @@
 import UIKit
 import RxSwift
 import ProgressHUD
-class TGBaseVC: UIViewController {
+import SnapKit
+open class TGBaseVC: UIViewController {
     //在视频出现的时候是否需要刷新
     var isNeedUpdateDataInViewWillAppear:Bool = false
     
@@ -54,7 +55,7 @@ class TGBaseVC: UIViewController {
         self.initNavBarUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isNeedHiddenSystemNavBar == true {
             self.navigationController?.isNavigationBarHidden = true;
@@ -62,7 +63,7 @@ class TGBaseVC: UIViewController {
 //        self.monitorWindowEvent()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if self.isNeedHiddenSystemNavBar == true {
             //归还之前vc的状态
@@ -72,7 +73,7 @@ class TGBaseVC: UIViewController {
         }
 //        NotificationCenter.default.removeObserver(self, name: Notification.Name.init(rawValue: "NSWindowDidResizeNotification"), object: nil)
     }
-    override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 //        LLog(TAG: TAG(self), "viewDidLayoutSubviews");
 //        if TGGlobal.isMac() {
@@ -96,7 +97,7 @@ class TGBaseVC: UIViewController {
        
     }
     //给子vc用来继承
-    func windowSizeDidChangeAction() -> Void {
+    open  func windowSizeDidChangeAction() -> Void {
        
         
     }
@@ -118,7 +119,7 @@ class TGBaseVC: UIViewController {
     }*/
     //end
     
-    func initNavBarUI() -> Void {
+    open func initNavBarUI() -> Void {
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
@@ -135,7 +136,7 @@ class TGBaseVC: UIViewController {
     }
     // MARK: 手势监听
     var leftGesutre:UISwipeGestureRecognizer?
-    func monitorLeftPanGesture() -> Void {
+    open  func monitorLeftPanGesture() -> Void {
         if leftGesutre != nil {
             return
         }
@@ -153,7 +154,7 @@ class TGBaseVC: UIViewController {
     }
     
     // MARK: 事件
-    @objc func backAction() -> Void {
+     @objc func backAction() -> Void {
         ProgressHUD.dismiss()
         if self.navigationController != nil {
             LLog(TAG: TAG(self), "count=\(self.navigationController!.viewControllers.count)");
@@ -205,7 +206,7 @@ class TGBaseVC: UIViewController {
     }
     
     // MARK: 弹框
-    func alertControl(title:String?,message:String?,sureName:String?,cancelName:String?,sureAction:(()->Void)?,cancelAction: (()->Void)? ) -> Void {
+    open  func alertControl(title:String?,message:String?,sureName:String?,cancelName:String?,sureAction:(()->Void)?,cancelAction: (()->Void)? ) -> Void {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if sureName != nil {
             let action = UIAlertAction(title: sureName, style: .destructive) { (action) in
@@ -233,17 +234,17 @@ class TGBaseVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    typealias LSAlertFinisheBlock = (_ result:String,_ index:Int) -> Void
-    func showAlertSheetView(_ title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
+    public typealias LSAlertFinisheBlock = (_ result:String,_ index:Int) -> Void
+    open func showAlertSheetView(_ title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
         
         showAlertType(.actionSheet, title: title, content: content, titles: array, handler: hander)
     }
     
-    func showAlertView(_ title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
+    open func showAlertView(_ title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
         showAlertType(.alert, title: title, content: content, titles: array, handler: hander)
     }
     
-    func showAlertType(_ type: UIAlertController.Style, title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
+    open  func showAlertType(_ type: UIAlertController.Style, title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
         //UIAlertControllerStyleActionSheet
         let alertVC = UIAlertController(title: title, message: content, preferredStyle: type)
         for i in 0..<(array?.count ?? 0) {
@@ -265,18 +266,18 @@ class TGBaseVC: UIViewController {
         present(alertVC, animated: true)
     }
     // MARK: 屏幕旋转
-    override var shouldAutorotate: Bool{
+    open override var shouldAutorotate: Bool{
         return false;
     }
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+    open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .portrait
     }
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
         return .portrait;
     }
 
     // MARK: 弹框
-    func showAlertDecompressInputPassword(_ completion:@escaping ((_ isSure:Bool,_ password:String?) -> Void)) {
+    open  func showAlertDecompressInputPassword(_ completion:@escaping ((_ isSure:Bool,_ password:String?) -> Void)) {
         
         let alertController = UIAlertController(title: NSLocalizedString("Please enter the unzip password".localized, comment: ""),
                         message: nil, preferredStyle: .alert)
@@ -309,11 +310,11 @@ class TGBaseVC: UIViewController {
     
     // MARK: 背景
     //添加背景
-    func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String)-> UIImageView{
+    open func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String)-> UIImageView{
         //无边框多余
         return addBgImageViewFor(view: view, fatherView: fatherView, imageStr: imageStr, edgInset: UIEdgeInsets.zero)
     }
-    func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String?,edgInset:UIEdgeInsets) -> UIImageView {
+    open func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String?,edgInset:UIEdgeInsets) -> UIImageView {
         let bgView = UIImageView()
         bgView.isUserInteractionEnabled = true
         if imageStr != nil {
@@ -425,179 +426,12 @@ class TGBaseVC: UIViewController {
 }
 
 extension TGBaseVC: UITextFieldDelegate {
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
     
 }
 
-extension TGBaseVC{
-    
-    
-    
-    // TODO: 点击文件夹
-    func handFolderClick(folder:TGFolderModel) -> Void {
-        //判断是否需要密码
-        if folder.isNeedGesturePassword == true{
-            //需要密码
-            let tempVC = TGGestureLockVC.init();
-            tempVC.currentType = .vertify;
-            tempVC.modalPresentationStyle = .fullScreen
-            tempVC.passwordCompleteBlock = { (result,type) in
-                //验证成功
-                if result == true {
-                    LLog(TAG: TAG(self), "验证成功...");
-                    self.handFolderClick2(folder: folder);
-                }
-            }
-            self.present(tempVC, animated: false)
-            return;
-        }
-        
-        self.handFolderClick2(folder: folder);
-        
-    }
-    
-    func handFolderClick2(folder:TGFolderModel) -> Void {
-        switch folder.watchModel {
-        case .defaultIntellect:
-//            LLog(TAG: TAG(self), "ggg22g");
-            self.handleClickIntellectFolder(folder: folder)
-//            LLog(TAG: TAG(self), "gggg");
-            break;
-        case .comic:
-            let tempVC = TGComicLookVC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .album:
-            let tempVC = TGAlbumLookVC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .musicHall:
-            let tempVC = TGMusicalHallVC.init();
-            tempVC.folderModel = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .threeDModel:
-            let tempVC = TGObjVC.init();
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break
-        default:
-            //以文件形式浏览
-            let tempVC = TGFileListStyle1VC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        }
-    }
-    
-    func handleClickIntellectFolder(folder:TGFolderModel) -> Void {
-        let type = folder.jugementFolderContentType();
-        switch type {
-        case .comic:
-//            let tempVC = TGComicLookVC.init()
-            let tempVC = TGComicOrAlbumVC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .album:
-            let tempVC = TGComicLookVC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .musicHall:
-            let tempVC = TGMusicalHallVC.init();
-            tempVC.folderModel = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .cinema:
-            //目前也是以文件方式浏览
-            let tempVC = TGFileListStyle1VC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        case .eBook:
-            let eBookCount = folder.getNumberOfPerCategory(.articles)
-            if eBookCount == 1 {
-                //只有一部作品直接跳进去观看
-                folder.requestSyncFiles();
-                var tempFile:TGFileBaseModel?
-                for item in folder.files {
-                    if item.fileType == .articles && item.fileSubType == .eBook{
-                        tempFile = item;
-                        break;
-                    }
-                }
-                if tempFile != nil {
-                    let tempVC = TGReadEBookVC.init()
-                    tempVC.resourceURL = tempFile!.getUrl()
-                    self.navigationController?.pushViewController(tempVC, animated: false)
-                    break;
-                }
-            }else{
-                //以文件形式浏览
-                let tempVC = TGFileListStyle1VC.init()
-                tempVC.model = folder;
-                self.navigationController?.pushViewController(tempVC, animated: false)
-            }
-            //统计
-            TGUserManager.share().enterVCOnce(.novalVC)
-            break;
-        case .threeDModel:
-            let tempVC = TGObjVC.init();
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break
-           
-        default:
-            //以文件形式浏览
-            let tempVC = TGFileListStyle1VC.init()
-            tempVC.model = folder;
-            self.navigationController?.pushViewController(tempVC, animated: false)
-            break;
-        }
-    }
-    
-    func exportFile(_ tempFolder:TGFolderModel) -> Void {
-        self.showAlertView("Are you sure you want to export?".localized, content: "", titles: ["Sure".localized,"Cancel".localized]) { result, index in
-            if index == 0 {
-                //确定
-                //压缩文件---
-                ProgressHUD.show()
-                DispatchQueue.global().async {
-                    let zipFile = tempFolder.fetchCompressZip(nil)
-                    if zipFile == nil {
-                        ProgressHUD.showMessageAuto("fetch compress file failture")
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        ProgressHUD.dismiss()
-                        let shareURL =  zipFile!.getUrl()
-                        let activityItems = [shareURL]
-                        let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                        vc.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
-                            print("\(String(describing: activityType))")
-                            if completed {
-                                print("分享成功")
-                                tempFolder.deleteCompressedZipFile()//删除已压缩的文件
-                            } else {
-                                //用户取消了分享
-                                print("户取消了分享")
-                                tempFolder.deleteCompressedZipFile()//删除已压缩的文件
-                            }
-                            vc.dismiss(animated: true)
-                        }
-                        self.present(vc, animated: true)
-                    }
-                }
 
-            }
-        }
-    }
-    
-}
 
 

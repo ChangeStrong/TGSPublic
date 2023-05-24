@@ -11,11 +11,11 @@ import UIKit
 import AVFoundation
 
 public let GlTestKey: String = "123"
-public let TGAppEnviroment:Int = 1;//0-测试环境 1-正式环境
+public var TGAppEnviroment:Int = 1;//0-测试环境 1-正式环境
 //public let TGFileBasseAdressType = 16;//13-酵母菌海外 16-酵母菌国内
 
 // MARK: 网络连接相关
-func websocketBaseUrlStr() -> String {
+public func websocketBaseUrlStr() -> String {
     if TGAppEnviroment == 0 {
         //测试环境
         return "ws://127.0.0.1:8888/Comic/websocket/";
@@ -76,10 +76,10 @@ public func TGNavStatusBarHeight() -> CGFloat {
         height = UIApplication.shared.windows.first?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
     }
     if height <= 0 {
-        height =  TGGlobal.getScenesDelegate()?.window?.safeAreaInsets.top ?? 0.0
+        height =  TGGlobal.getScenesDelegate()?.window??.safeAreaInsets.top ?? 0.0
     }
     if height <= 0 {
-        height = TGGlobal.getScenesDelegate()?.window?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
+        height = TGGlobal.getScenesDelegate()?.window??.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
     }
     if height <= 0 {
         height = UIApplication.shared.statusBarFrame.size.height
@@ -101,7 +101,7 @@ public func TGBottomSafeHeight() -> CGFloat {
         height = UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0.0
     }
     if height == 0 {
-        height = TGGlobal.getScenesDelegate()?.window?.safeAreaInsets.bottom ?? 0.0
+        height = TGGlobal.getScenesDelegate()?.window??.safeAreaInsets.bottom ?? 0.0
     }
 //    if height < 34 {
 //        //好像存在小于20的情况
@@ -270,17 +270,17 @@ public class TGGlobal:NSObject{
         return identifier;
     }
     
-    class func getScenesDelegate() -> SceneDelegate?{
+    class func getScenesDelegate() -> UIWindowSceneDelegate?{
         let arry = UIApplication.shared.connectedScenes;
         for item in arry {
             if item.activationState == .foregroundActive {
                 let windowScene = item;
-                return windowScene.delegate as? SceneDelegate;
+                return windowScene.delegate as? UIWindowSceneDelegate;
             }
         }
 
       let scene =   Array(UIApplication.shared.openSessions).last?.scene
-        return scene?.delegate as? SceneDelegate;
+        return scene?.delegate as? UIWindowSceneDelegate;
         
     }
     
@@ -537,7 +537,7 @@ public class TGGlobal:NSObject{
     
 }
 
-class TGGloabalUI{
+public class TGGloabalUI{
     enum TGButtonImageDirection {
         case Left
         case Top
@@ -644,7 +644,7 @@ class TGGloabalUI{
         // 获取默认的window
     
         var window = TGGlobal.getScenesDelegate()?.window//UIApplication.shared.keyWindow
-        if window?.windowLevel != .normal {
+       if window??.windowLevel != .normal {
             let windows = UIApplication.shared.windows
             for tmpWin in windows {
                 if tmpWin.windowLevel == .normal {
@@ -654,7 +654,7 @@ class TGGloabalUI{
             }
         }
         // 获取window的rootViewController
-        result = window?.rootViewController
+       result = window??.rootViewController
         while ((result?.presentedViewController) != nil) {
             result = result?.presentedViewController
         }

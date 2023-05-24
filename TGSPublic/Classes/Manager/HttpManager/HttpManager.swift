@@ -14,23 +14,23 @@ func TGGetHttpBaseUrl() -> String {
         return "http://127.0.0.1:8888/Comic/"
 //        return "http://192.168.2.178:8888/Comic/"
     }
-    if TGUserManager.share().jugementIsAbroad() == true {
-        //国外
-        return "http://47.250.42.225:8080/YeastJun/" //酵母菌海外
-    }else{
+//    if TGUserManager.share().jugementIsAbroad() == true {
+//        //国外
+//        return "http://47.250.42.225:8080/YeastJun/" //酵母菌海外
+//    }else{
         //国内
         return "http://116.62.172.2:80/" //酵母菌国内
-    }
+//    }
 }
 
 func TGGetUploadFileBasseAdressType() -> Int {
-    if TGUserManager.share().jugementIsAbroad() == true {
-        //国外
-        return 13;
-    }else{
+//    if TGUserManager.share().jugementIsAbroad() == true {
+//        //国外
+//        return 13;
+//    }else{
         //酵母菌国内
         return 16;
-    }
+//    }
 }
 
 //使用域名的方式--分享链接需要
@@ -188,7 +188,7 @@ extension HttpAPIManager: TargetType {
                 return filePath
             default:
                 let name = "\(Date.fetchCurrentSeconds())";
-                return TGFileUtil.getApplicationSupportURl().appendingPathComponent(name)
+                return HttpAPIManager.getApplicationSupportURl().appendingPathComponent(name)
             }
         }
     
@@ -196,6 +196,16 @@ extension HttpAPIManager: TargetType {
             // `createIntermediateDirectories` will create directories in file path
             return { _, _ in return (self.localLocation, [.removePreviousFile, .createIntermediateDirectories]) }
         }
+    
+    public static func getApplicationSupportURl() -> URL{
+        //application support目录
+        let applicationSupportURl:URL? = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        if applicationSupportURl == nil {
+            LLog(TAG: TAG(self), "Not find applicationSupportDirectory.!!");
+            return URL.init(fileURLWithPath: NSHomeDirectory())
+        }
+        return applicationSupportURl!;
+    }
 }
 
 extension Dictionary {
