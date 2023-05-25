@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TGSPublic'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of TGSPublic.'
+  s.version          = '0.1.2'
+  s.summary          = 'swift公共组件'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -40,7 +40,8 @@ TODO: Add long description of the pod here.
    #s.frameworks = 'UIKit', 'MapKit', 'Foundation', 'AVFoundation', 'WebKit', 'Security'
    #s.libraries = 'commonCryptor'
   # s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libcommonCrypto' }
-  
+  #s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  #s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
   # s.dependency 'AFNetworking', '~> 2.3'
    s.dependency 'Alamofire', '~> 5.0'
