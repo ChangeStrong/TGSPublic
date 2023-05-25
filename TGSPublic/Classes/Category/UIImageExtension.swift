@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIImage{
+public extension UIImage{
     ///获取图片主题
     func subjectColor(_ completion: @escaping (_ topColor: UIColor?,_ midColor: UIColor?,_ bottomColor: UIColor?) -> Void){
         if self.size.width < 60 || self.size.height < 60 {

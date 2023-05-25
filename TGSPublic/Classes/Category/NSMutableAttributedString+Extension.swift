@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-extension NSMutableAttributedString{
+public extension NSMutableAttributedString{
     func addBlackShadow(lenght:Int) -> Void {
         let shadow = NSShadow.init();
                     shadow.shadowBlurRadius = 1.0

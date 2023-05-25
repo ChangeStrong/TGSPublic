@@ -13,7 +13,7 @@ open class TGBaseModel: NSObject,HandyJSON,Codable {
     required public override init() {}
     
     //json转模型时
-    var descriptioN:String?
+   public var descriptioN:String?
     open func mapping(mapper: HelpingMapper) {
             // specify 'cat_id' field in json map to 'id' property in object
             mapper <<<

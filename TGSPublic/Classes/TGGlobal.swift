@@ -220,7 +220,7 @@ public func LocalString(_ key:String) -> String {
   return  NSLocalizedString(key, tableName: "Localizable", bundle: Bundle.main, value: "", comment: "")
 }
 
-
+@objcMembers
 public class TGGlobal:NSObject{
     
     //通过手机语言判断是否是国外
@@ -270,7 +270,7 @@ public class TGGlobal:NSObject{
         return identifier;
     }
     
-    class func getScenesDelegate() -> UIWindowSceneDelegate?{
+    public class func getScenesDelegate() -> UIWindowSceneDelegate?{
         let arry = UIApplication.shared.connectedScenes;
         for item in arry {
             if item.activationState == .foregroundActive {
@@ -421,7 +421,7 @@ public class TGGlobal:NSObject{
     }
     
     //json字符串转字典
-    class func getDictionaryFromJSONString(jsonString:String) ->Dictionary<String, Any>?{
+    public class func getDictionaryFromJSONString(jsonString:String) ->Dictionary<String, Any>?{
         let jsonData:Data = jsonString.data(using: .utf8)!
         let dict = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
         if dict == nil {
@@ -430,7 +430,7 @@ public class TGGlobal:NSObject{
         return dict as? Dictionary<String, Any>
     }
     //json转数组
-    class func getArrayFromJSONString(jsonString:String) ->[Any]?{
+    public  class func getArrayFromJSONString(jsonString:String) ->[Any]?{
         //此方法json字符串包含很多转义\也可以解出来
 //       let  tempJsonStr = jsonString.replacingOccurrences(of: "\\", with: "")
             let jsonData:Data = jsonString.data(using: .utf8)!
@@ -442,7 +442,7 @@ public class TGGlobal:NSObject{
         return array as? [Any]
         }
     //字典转json
-   class func getJSONStringFrom(obj:Any) -> String {
+    public class func getJSONStringFrom(obj:Any) -> String {
             if (!JSONSerialization.isValidJSONObject(obj)) {
                 LLog(TAG: TAG(self), "can't get JSONString!");
                 return ""
@@ -454,7 +454,7 @@ public class TGGlobal:NSObject{
         }
     
     //
-    class func removeEmptyValue(_ dict:[String:Any],_ nonKeys:[String]) -> Dictionary<String, Any> {
+    public class func removeEmptyValue(_ dict:[String:Any],_ nonKeys:[String]) -> Dictionary<String, Any> {
         var dict2 = dict;
         //移除不需要的key
             for key in nonKeys {
@@ -468,7 +468,7 @@ public class TGGlobal:NSObject{
     
     
     //获取视频的尺寸
-    class func getVideoSize(by url: URL?) -> CGSize {
+    public  class func getVideoSize(by url: URL?) -> CGSize {
         var asset: AVAsset? = nil
         if let url = url {
             asset = AVAsset(url: url)
@@ -490,7 +490,7 @@ public class TGGlobal:NSObject{
     }
     
     // 获取视频第一帧
-    class func getVideoFirstViewImage(_ path: URL?) -> UIImage? {
+public class func getVideoFirstViewImage(_ path: URL?) -> UIImage? {
     
         var asset: AVURLAsset? = nil
         if let path = path {
@@ -538,7 +538,7 @@ public class TGGlobal:NSObject{
 }
 
 public class TGGloabalUI{
-    enum TGButtonImageDirection {
+    public  enum TGButtonImageDirection {
         case Left
         case Top
         case Right
@@ -548,12 +548,12 @@ public class TGGloabalUI{
      contentInset 内容和大背景间的padding
      interval 图片和标题间的间隙
      */
-   static func addContentForButton(button:UIButton,fatherView:UIView,bgImageStr:String?,imageStr:String,title:String,imgDirection:TGButtonImageDirection,imageSize:CGSize,interval:CGFloat,contentInset:UIEdgeInsets) -> (bgView:UIImageView, titleLabel:UILabel,imageView:UIImageView){
+    public static func addContentForButton(button:UIButton,fatherView:UIView,bgImageStr:String?,imageStr:String,title:String,imgDirection:TGButtonImageDirection,imageSize:CGSize,interval:CGFloat,contentInset:UIEdgeInsets) -> (bgView:UIImageView, titleLabel:UILabel,imageView:UIImageView){
         //背景阴影为0
         return addContentForButton(button: button, fatherView: fatherView, bgImageStr: bgImageStr, imageStr: imageStr, title: title, imgDirection: imgDirection, imageSize: imageSize, interval: interval, contentInset: contentInset, bgShadowExdInset: UIEdgeInsets.zero)
     }
     
-    static func addContentForButton(button:UIButton,fatherView:UIView,bgImageStr:String?,imageStr:String,title:String,imgDirection:TGButtonImageDirection,imageSize:CGSize,interval:CGFloat,contentInset:UIEdgeInsets,bgShadowExdInset:UIEdgeInsets) -> (bgView:UIImageView, titleLabel:UILabel,imageView:UIImageView) {
+    public static func addContentForButton(button:UIButton,fatherView:UIView,bgImageStr:String?,imageStr:String,title:String,imgDirection:TGButtonImageDirection,imageSize:CGSize,interval:CGFloat,contentInset:UIEdgeInsets,bgShadowExdInset:UIEdgeInsets) -> (bgView:UIImageView, titleLabel:UILabel,imageView:UIImageView) {
         //添加背景
         let bgImageView = self.addBgImageViewFor(view: button, fatherView: fatherView, imageStr: bgImageStr,edgInset: bgShadowExdInset)
         
@@ -619,7 +619,7 @@ public class TGGloabalUI{
         return (bgImageView,label,imageView)
     }
     
-    static func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String?,edgInset:UIEdgeInsets) -> UIImageView {
+    public  static func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String?,edgInset:UIEdgeInsets) -> UIImageView {
         let bgView = UIImageView()
         bgView.isUserInteractionEnabled = true
         if imageStr != nil {
@@ -639,7 +639,7 @@ public class TGGloabalUI{
     }
     
     //获取当前屏幕显示的viewcontroller
-   class func getCurrentVC() -> UIViewController? {
+public class func getCurrentVC() -> UIViewController? {
         var result: UIViewController? = nil
         // 获取默认的window
     

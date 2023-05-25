@@ -8,15 +8,15 @@
 
 import UIKit
 
-class TGPaginationVo: TGBaseModel {
-    var pageSize:Int=0
-    var pageNo:Int?
-    var firstResult:Int?
-    var nextPage:Int?
-    var prePage:Int?
-    var totalCount:Int?
-    var totalPage:Int?
-    var isFirstPage:Bool = false
-    var isLastPage:Bool = false
+open class TGPaginationVo: TGBaseModel {
+    public var pageSize:Int=0
+   public var pageNo:Int?
+    public var firstResult:Int?
+    public var nextPage:Int?
+    public var prePage:Int?
+    public var totalCount:Int?
+    public var totalPage:Int?
+    public var isFirstPage:Bool = false
+    public var isLastPage:Bool = false
     
 }

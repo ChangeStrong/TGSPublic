@@ -36,7 +36,7 @@ open class TGBaseView: UIView {
        
     }
     //给子vc用来继承
-    func windowSizeDidChangeAction() -> Void {
+   open func windowSizeDidChangeAction() -> Void {
        
         
     }

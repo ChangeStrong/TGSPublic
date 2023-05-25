@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIView{
+public extension UIView{
     //添加毛玻璃效果
      func addBlurView(style effctStyle: UIBlurEffect.Style) -> UIView {
         let blurEffect = UIBlurEffect(style: effctStyle)
@@ -27,7 +27,7 @@ extension UIView{
     
 }
 
-extension UIView{
+public extension UIView{
     var x:CGFloat{
         set{
             self.frame = CGRect.init(x: newValue, y: self.y, width: self.width, height: self.height);

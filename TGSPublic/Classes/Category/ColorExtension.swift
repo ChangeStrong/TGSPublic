@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     /// hexColor
     convenience init(hex: UInt32) {
         let r: CGFloat = CGFloat((hex & 0xFF000000) >> 24) / 255.0

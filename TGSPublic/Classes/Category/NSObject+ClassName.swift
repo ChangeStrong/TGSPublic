@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSObject {
+public extension NSObject {
     
     /// 返回类名字符串
     static var className: String {

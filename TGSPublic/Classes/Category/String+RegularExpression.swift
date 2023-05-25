@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     /// 通过正则表达式匹配替换
     func replacingStringOfRegularExpression(pattern: String, template: String) -> String {
         var content = self

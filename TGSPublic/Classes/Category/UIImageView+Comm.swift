@@ -7,7 +7,7 @@
 //
 
 import Foundation
-extension UIImageView{
+public extension UIImageView{
     func downloadedFrom(imageurl : String){
         //创建URL对象
         let url = URL(string: imageurl)!

@@ -8,13 +8,13 @@
 
 import UIKit
 
-class CommButton: UIButton {
+open class CommButton: UIButton {
 
-   override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+    open override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
     return CGRect(x: 0, y: 0, width: self.bounds.size.height, height: self.bounds.size.height)
     }
     
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         let size = self.bounds.size

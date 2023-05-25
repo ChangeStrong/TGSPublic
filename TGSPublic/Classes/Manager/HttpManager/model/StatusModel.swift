@@ -9,10 +9,10 @@
 import UIKit
 import HandyJSON
 //通用接数据模型
-class StatusModel<T:Any>: TGBaseModel {
-    var code:Int32?
-    var data:T?
-    var message:String?
+open class StatusModel<T:Any>: TGBaseModel {
+   public var code:Int32?
+    public  var data:T?
+    public var message:String?
     //内部测试
-    var datas:T?
+    public var datas:T?
 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension String {
+public extension String {
     
    //对象方法
    func sizeOfText(withMaxSize maxSize: CGSize, font: UIFont?) -> CGSize {

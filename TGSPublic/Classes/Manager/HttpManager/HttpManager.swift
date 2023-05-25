@@ -9,7 +9,7 @@
 import Foundation
 import Moya
 
-func TGGetHttpBaseUrl() -> String {
+public func TGGetHttpBaseUrl() -> String {
     if TGAppEnviroment == 0 {
         return "http://127.0.0.1:8888/Comic/"
 //        return "http://192.168.2.178:8888/Comic/"
@@ -23,7 +23,7 @@ func TGGetHttpBaseUrl() -> String {
 //    }
 }
 
-func TGGetUploadFileBasseAdressType() -> Int {
+public func TGGetUploadFileBasseAdressType() -> Int {
 //    if TGUserManager.share().jugementIsAbroad() == true {
 //        //国外
 //        return 13;
@@ -34,18 +34,18 @@ func TGGetUploadFileBasseAdressType() -> Int {
 }
 
 //使用域名的方式--分享链接需要
-func TGGetHttpDomainUrl() -> String {
+public func TGGetHttpDomainUrl() -> String {
     if TGAppEnviroment == 0 {
         return TGGetHttpBaseUrl();
     }
     return "http://yeast.plus:80/" //酵母菌国内
 }
 
-func TGFetchDefaultHeadUrl() -> String {
+public func TGFetchDefaultHeadUrl() -> String {
     return TGGetHttpBaseUrl() + "resources/images/defaultAdminHead.png";
 }
 
-enum HttpAPIManager{
+public enum HttpAPIManager{
     case DownloadFullAddress(Dictionary<String, Any>) // 添加游客
     case GetHomeDetail(Int)  // 获取详情页
     case PostMethod1(Dictionary<String, Any>) //根据关键字搜索
@@ -55,12 +55,12 @@ enum HttpAPIManager{
 
 extension HttpAPIManager: TargetType {
 
-    var headers: [String : String]? {
+    public var headers: [String : String]? {
         return nil
     }
     
     /// The target's base `URL`.
-    var baseURL: URL {
+    public var baseURL: URL {
         switch self {
         case .getCityInfo1:
             return URL.init(string: "http://ip-api.com")!
@@ -76,7 +76,7 @@ extension HttpAPIManager: TargetType {
         
     }
     /// The path to be appended to `baseURL` to form the full `URL`.
-    var path: String {
+    public var path: String {
         switch self {
         case .getCityInfo1:
             return "json/";
@@ -92,7 +92,7 @@ extension HttpAPIManager: TargetType {
        
     }
 // 区分get 和 post
-    var method: Moya.Method {
+    public var method: Moya.Method {
         switch self {
         case .getCityInfo1:
             return .get;
@@ -117,7 +117,7 @@ extension HttpAPIManager: TargetType {
         return URLEncoding.default
     }
     /// Provides stub data for use in testing.
-    var sampleData: Data {
+    public var sampleData: Data {
         switch self {
         case .DownloadFullAddress(_):
             //{\"userId\": \"1\", \"Title\": \"Title String\", \"Body\": \"Body String\"}
@@ -129,7 +129,7 @@ extension HttpAPIManager: TargetType {
         }
     }
     /// The type of HTTP task to be performed.
-    var task: Task {
+    public var task: Task {
         switch self {
         case .DownloadFullAddress( _):
             return .downloadParameters(parameters: self.params, encoding: URLEncoding.default, destination: downloadDestination)
@@ -208,7 +208,7 @@ extension HttpAPIManager: TargetType {
     }
 }
 
-extension Dictionary {
+public extension Dictionary {
     mutating func merge(dict: [Key: Value]){
         for (k, v) in dict {
             updateValue(v, forKey: k)
@@ -217,15 +217,15 @@ extension Dictionary {
 }
 
 
-class Http{
+public class Http{
     // 请求成功的回调
-    typealias successCallback = (_ result: Any?,_ pageVo:TGPaginationVo?,_ msg:String?,_ code:Int?) -> Void
+    public typealias successCallback = (_ result: Any?,_ pageVo:TGPaginationVo?,_ msg:String?,_ code:Int?) -> Void
     // 请求失败的回调
-    typealias failureCallback = (_ error: MoyaError) -> Void
+    public typealias failureCallback = (_ error: MoyaError) -> Void
     
     //进度
-    typealias progressCallBack = (_ proResponse:ProgressResponse) ->Void
-    static var requestTimeOut:Double = 20;
+    public  typealias progressCallBack = (_ proResponse:ProgressResponse) ->Void
+    public static var requestTimeOut:Double = 20;
     static let requestClosure = { (endpoint:Endpoint, done: @escaping MoyaProvider<HttpAPIManager>.RequestResultClosure) in
 
                do{
@@ -242,7 +242,7 @@ class Http{
     static let provider = MoyaProvider<HttpAPIManager>(requestClosure: requestClosure)
     
     // 发送网络请求
-    static func request(
+    public static func request(
         target: HttpAPIManager,
         success: @escaping successCallback,
         failure: @escaping failureCallback
@@ -251,7 +251,7 @@ class Http{
         
     }
     //带进度条
-    static func request(
+    public static func request(
     target: HttpAPIManager,
     progress: progressCallBack? = nil,
     success: @escaping successCallback,
@@ -347,7 +347,7 @@ class Http{
     
     
     
-    static func requestDownload(
+    public static func requestDownload(
         target: HttpAPIManager,
         callbackQueue: DispatchQueue? = .main,
         progress: progressCallBack? = nil,

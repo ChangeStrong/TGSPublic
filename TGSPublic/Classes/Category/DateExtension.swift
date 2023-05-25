@@ -10,7 +10,7 @@ import Foundation
 
 
 public typealias DateExtension = Date
-extension DateExtension{
+public extension DateExtension{
     
     enum TGWeekDay:Int {
         case Sunday = 1

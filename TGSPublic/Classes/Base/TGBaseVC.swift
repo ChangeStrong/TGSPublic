@@ -12,13 +12,13 @@ import ProgressHUD
 import SnapKit
 open class TGBaseVC: UIViewController {
     //在视频出现的时候是否需要刷新
-    var isNeedUpdateDataInViewWillAppear:Bool = false
+    public  var isNeedUpdateDataInViewWillAppear:Bool = false
     
-    let disposeBag = DisposeBag()
-    var pageNumber:Int = 1
+    public let disposeBag = DisposeBag()
+    public var pageNumber:Int = 1
     //是否可以显示无任何数据的提示
-    var isCanShowEmptyAlert:Bool = false;
-    var isNeedHiddenSystemNavBar:Bool = false{
+    public var isCanShowEmptyAlert:Bool = false;
+    public var isNeedHiddenSystemNavBar:Bool = false{
         didSet{
             if isNeedHiddenSystemNavBar == true{
                 if self.navigationController  != nil{
@@ -30,7 +30,7 @@ open class TGBaseVC: UIViewController {
             }
         }
     }
-    var isNeedLeftPanGesture:Bool = false{
+public var isNeedLeftPanGesture:Bool = false{
         didSet{
             //自定义侧滑手势
             if isNeedLeftPanGesture == true {
@@ -43,7 +43,7 @@ open class TGBaseVC: UIViewController {
 //   public func TAG() -> String {
 //        return self.className
 //    }
-    var oldNavBarHiddenStatus:Bool = false;
+    public var oldNavBarHiddenStatus:Bool = false;
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -145,7 +145,7 @@ open class TGBaseVC: UIViewController {
         self.view.addGestureRecognizer(leftGesutre!)
     }
     
-    @objc func swipeLeftAction(gesture:UISwipeGestureRecognizer){
+    @objc open func swipeLeftAction(gesture:UISwipeGestureRecognizer){
         LLog(TAG: TAG(self), "gesture direction=\(gesture.direction)");
         if gesture.direction == .right {
             //退出当前界面
@@ -154,7 +154,7 @@ open class TGBaseVC: UIViewController {
     }
     
     // MARK: 事件
-     @objc func backAction() -> Void {
+     @objc open func backAction() -> Void {
         ProgressHUD.dismiss()
         if self.navigationController != nil {
             LLog(TAG: TAG(self), "count=\(self.navigationController!.viewControllers.count)");
@@ -172,7 +172,7 @@ open class TGBaseVC: UIViewController {
         }
     }
     
-    @objc func leftBtnAction() -> Void {
+    @objc open func leftBtnAction() -> Void {
         if self.navigationController != nil {
             if self.navigationController?.viewControllers.first != nil  && self.navigationController?.viewControllers.first == self{
                 self.navigationController?.dismiss(animated: false)
@@ -186,7 +186,7 @@ open class TGBaseVC: UIViewController {
     }
     
     
-    @objc func rightBtnAction() -> Void {
+    @objc open func rightBtnAction() -> Void {
         
     }
     
@@ -335,7 +335,7 @@ open class TGBaseVC: UIViewController {
     
     // MARK: 自定义button
     
-    lazy var navBar: UIView = {
+    public lazy var navBar: UIView = {
         //隐藏系统的navBar
         self.isNeedHiddenSystemNavBar = true;
         
@@ -353,7 +353,7 @@ open class TGBaseVC: UIViewController {
     
     
     
-    lazy var backBtn: TGExpandButton = {
+    public  lazy var backBtn: TGExpandButton = {
         let view1 = UIImageView()
         view1.image = UIImage.init(named: "public_back_arrow")
         self.navBar.addSubview(view1)
@@ -375,7 +375,7 @@ open class TGBaseVC: UIViewController {
         return view
     }()
     
-    lazy var navLeftBtn: TGExpandButton = {
+    public    lazy var navLeftBtn: TGExpandButton = {
         let view = TGExpandButton()
 //        view.setTitle(LocalString("Cancel"), for: UIControl.State.normal)
         view.setTitleColor(TGColorTextGray6, for: UIControl.State.normal)
@@ -392,7 +392,7 @@ open class TGBaseVC: UIViewController {
         return view
     }()
     
-    lazy var navRightBtn: TGExpandButton = {
+    public lazy var navRightBtn: TGExpandButton = {
         let view = TGExpandButton()
         view.setTitleColor(TGColorTheamMain, for: UIControl.State.normal)
         view.backgroundColor = UIColor.clear;
@@ -408,7 +408,7 @@ open class TGBaseVC: UIViewController {
         return view
     }()
     
-    lazy var navTitleLabel: UILabel = {
+    public lazy var navTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
         label.font = TGFontBold(18)

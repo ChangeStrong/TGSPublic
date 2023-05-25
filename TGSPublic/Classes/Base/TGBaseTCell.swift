@@ -40,7 +40,7 @@ open class TGBaseTCell: UITableViewCell {
        
     }
     //给子vc用来继承
-    func windowSizeDidChangeAction() -> Void {
+   open func windowSizeDidChangeAction() -> Void {
        
         
     }

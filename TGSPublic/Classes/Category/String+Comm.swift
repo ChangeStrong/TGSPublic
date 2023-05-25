@@ -155,7 +155,7 @@ public extension String{
     
 }
 
-extension String {
+public extension String {
     func toNSRange(_ range: Range<String.Index>) -> NSRange {
         guard let from = range.lowerBound.samePosition(in: utf16), let to = range.upperBound.samePosition(in: utf16) else {
             return NSMakeRange(0, 0)

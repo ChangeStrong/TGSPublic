@@ -11,7 +11,7 @@ import GRDB
 import HandyJSON
 
 open class TGSqlBase: Record,HandyJSON {
-    public class func allVersionSqls() -> [String:[String]]{
+    open class func allVersionSqls() -> [String:[String]]{
         return [:];
     }
     

@@ -221,7 +221,7 @@ fileprivate func saveLogToPath(content:String?){
 }
 
 //MARK:- Extension for String
-extension String
+public extension String
 {
     func appendLineToURL(fileURL: URL) throws
     {
@@ -234,7 +234,7 @@ extension String
     }
 }
 //MARK:- Extension for File data
-extension Data
+public extension Data
 {
     //data的追加在某个文件末尾
     func append(fileURL: URL) throws {
@@ -255,7 +255,7 @@ extension Data
 }
 
 
-func getRemainDiskSize() -> Double {
+public func getRemainDiskSize() -> Double {
     /// 总大小
 //    var totalsize: Double = 0.0
     /// 剩余大小
