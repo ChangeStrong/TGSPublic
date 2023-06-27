@@ -80,41 +80,36 @@ open class TGBaseModel: NSObject,HandyJSON,Codable {
      }
  
  
+ 
+//针对非object-c对象
  //自定义解析某个属性
- mapper <<<
-     self.files <-- TransformOf<[TGFileBaseModel],[Dictionary<String,Any>]>(fromJSON: { (tempArry) -> [TGFileBaseModel] in
-//            if rawString == nil {
-//                return [];
-//            }
-     
-//            let tempArry = TGGlobal.getArrayFromJSONString(jsonString: rawString!);
-     var temps:[TGFileBaseModel] = [];
-     if tempArry == nil {
-         LLog(TAG: TAG(self), "file is empty.!");
-         return temps;
+ func mapping(mapper: HelpingMapper) {
+         mapper <<<
+             self.frame <-- TransformOf<CGRect, NSDictionary>(
+                 fromJSON: { (value: NSDictionary?) -> CGRect in
+                     if let dictionary = value {
+                         let x = dictionary["x"] as? CGFloat ?? 0
+                         let y = dictionary["y"] as? CGFloat ?? 0
+                         let width = dictionary["width"] as? CGFloat ?? 0
+                         let height = dictionary["height"] as? CGFloat ?? 0
+                         return CGRect(x: x, y: y, width: width, height: height)
+                     }
+                     return CGRect.zero
+                 },
+                 toJSON: { (value: CGRect?) -> NSDictionary in
+                     if let rect = value {
+                         let dictionary: [String: CGFloat] = [
+                             "x": rect.origin.x,
+                             "y": rect.origin.y,
+                             "width": rect.size.width,
+                             "height": rect.size.height
+                         ]
+                         return NSDictionary(dictionary: dictionary)
+                     }
+                     return NSDictionary()
+                 }
+             )
      }
-         LLog(TAG: TAG(self), "tempArry=\(tempArry!)");
-     for item in tempArry! {
-         let dict:[String:Any] = item as! [String : Any];
-         let fileType:Int? = dict["fileType"] as? Int;
-         if fileType != nil && TGFileBaseModel.TGFileType.folder.rawValue == fileType {
-             //是文件夹
-             LLog(TAG: TAG(self), "是文件夹");
-             let jsonStr:String = TGGlobal.getJSONStringFrom(obj: dict);
-             let tempModel:TGFolderModel = TGFolderModel.deserialize(from: jsonStr)!;
-             temps.append(tempModel);
-         }else{
-             //是文件
-             let jsonStr:String = TGGlobal.getJSONStringFrom(obj: dict);
-             let tempModel:TGFileModel = TGFileModel.deserialize(from: jsonStr)!;
-             LLog(TAG: TAG(self), "文件路径:\(tempModel.path ?? "")");
-             temps.append(tempModel);
-         }
-     }
-     return temps
- },toJSON: { temps in
-     return temps?.toJSON()
- })
  
  
  */

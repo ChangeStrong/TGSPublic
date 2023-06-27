@@ -9,18 +9,13 @@
 import Foundation
 import Moya
 
+public var TGHttpBaseUrlPath = "http://116.62.172.2:80/"
 public func TGGetHttpBaseUrl() -> String {
     if TGAppEnviroment == 0 {
         return "http://127.0.0.1:8888/Comic/"
 //        return "http://192.168.2.178:8888/Comic/"
     }
-//    if TGUserManager.share().jugementIsAbroad() == true {
-//        //国外
-//        return "http://47.250.42.225:8080/YeastJun/" //酵母菌海外
-//    }else{
-        //国内
-        return "http://116.62.172.2:80/" //酵母菌国内
-//    }
+        return TGHttpBaseUrlPath
 }
 
 public func TGGetUploadFileBasseAdressType() -> Int {
@@ -52,11 +47,24 @@ public enum HttpAPIManager{
     case getCityInfo1
     case getCityInfo2
 }
-
+//提供给外部组件重新设置请求头
+public var TGHttpHeadersDict:[String : String]?
 extension HttpAPIManager: TargetType {
 
     public var headers: [String : String]? {
-        return nil
+        if TGHttpHeadersDict != nil {
+            //外部组件有重新设置请求头
+            return TGHttpHeadersDict
+        }
+        var dict:[String:String] = [:]
+        if TGGlobal.isMac() {
+            dict["platform"] = "mac";
+        }else{
+            dict["platform"] = "iOS";
+        }
+        dict["deviceType"] = TGGlobal.deviceType()
+        dict["deviceLanguage"] = "varialble_Local_Laungue".localized
+        return dict
     }
     
     /// The target's base `URL`.

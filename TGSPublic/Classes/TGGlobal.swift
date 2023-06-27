@@ -24,17 +24,17 @@ public func websocketBaseUrlStr() -> String {
 }
 
 //**颜色相关
-public let TGColorTheamMain = UIColor.init(hex: "FF5251")
-public let TGColorBGGray = UIColor.init(hex: "F0F0F0") //灰白
-public let TGColorBGWhiteGray = UIColor.init(hex: "FBFBFB") //淡白
-public let TGColorBGWhiteD = UIColor.init(hex: "FDFDFD") //淡白--很接近白
-public let TGColorLine = UIColor.init(hex: "EFEFEF")
+public var TGColorTheamMain = UIColor.init(hex: "FF5251")
+public var TGColorBGGray = UIColor.init(hex: "F0F0F0") //灰白
+public var TGColorBGWhiteGray = UIColor.init(hex: "FBFBFB") //淡白
+public var TGColorBGWhiteD = UIColor.init(hex: "FDFDFD") //淡白--很接近白
+public var TGColorLine = UIColor.init(hex: "EFEFEF")
 //文字主颜色
-public let TGColorTextMain = UIColor.black
-public let TGColorTextGray6 = UIColor.init(hex: "6F6F6F")
-public let TGColorTextGray8 = UIColor.init(hex: "858585")//偏白一点的灰
+public var TGColorTextMain = UIColor.black
+public var TGColorTextGray6 = UIColor.init(hex: "6F6F6F")
+public var TGColorTextGray8 = UIColor.init(hex: "858585")//偏白一点的灰
 ///系统的textfeild的placehord用的此颜色 c5c5c6
-public let TGColorTextGraySystem = UIColor.init(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.3)
+public var TGColorTextGraySystem = UIColor.init(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.3)
 
 //默认网络加载失败占位图
 public let TGDefaultImgTwoBigLine = UIImage.init(named: "default_two_big_line")
@@ -225,8 +225,8 @@ public class TGGlobal:NSObject{
     
     //通过手机语言判断是否是国外
     public class func isChina() -> Bool{
-        let temp = "China".localized
-        if temp == "中国" {
+        let temp = "varialble_Local_Laungue".localized
+        if temp == "Chinese" {
             return true;
         }
         return false;
