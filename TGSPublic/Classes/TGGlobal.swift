@@ -37,10 +37,10 @@ public var TGColorTextGray8 = UIColor.init(hex: "858585")//偏白一点的灰
 public var TGColorTextGraySystem = UIColor.init(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.3)
 
 //默认网络加载失败占位图
-public let TGDefaultImgTwoBigLine = UIImage.init(named: "default_two_big_line")
-public let TGDefaultNoNetImg = UIImage.init(named: "default_no_net")
-public let TGDefaultHeadImg = UIImage.init(named: "default_head")
-public let TDDefaultHeadBgImg = UIImage.init(named: "default_head_bg")
+public var TGDefaultImgTwoBigLine = UIImage.init(named: "default_two_big_line")
+public var TGDefaultNoNetImg = UIImage.init(named: "default_no_net")
+public var TGDefaultHeadImg = UIImage.init(named: "default_head")
+public var TDDefaultHeadBgImg = UIImage.init(named: "default_head_bg")
 //**end
 
 //*start  frame相关

@@ -352,10 +352,10 @@ public var isNeedLeftPanGesture:Bool = false{
     }()
     
     
-    
+    public var backBtnImg = UIImage.init(named: "public_back_arrow")
     public  lazy var backBtn: TGExpandButton = {
         let view1 = UIImageView()
-        view1.image = UIImage.init(named: "public_back_arrow")
+        view1.image = backBtnImg
         self.navBar.addSubview(view1)
         let scale:CGFloat = 22/40.0;
         view1.snp.makeConstraints { (make) in
