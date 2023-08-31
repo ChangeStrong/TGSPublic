@@ -1,7 +1,7 @@
 {
   "name": "TGSPublic",
-  "version": "0.1.0",
-  "summary": "A short description of TGSPublic.",
+  "version": "0.1.6",
+  "summary": "swift公共组件",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/ChangeStrong/TGSPublic",
   "license": {
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/ChangeStrong/TGSPublic.git",
-    "tag": "0.1.0"
+    "tag": "0.1.6"
   },
   "swift_versions": "5.0",
   "platforms": {
@@ -35,7 +35,7 @@
       "~> 14.0"
     ],
     "HandyJSON": [
-      "5.0.2"
+
     ],
     "GRDB.swift": [
       "~> 5.24.0"

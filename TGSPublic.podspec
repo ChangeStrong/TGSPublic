@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TGSPublic'
-  s.version          = '0.1.5'
+  s.version          = '0.1.8'
   s.summary          = 'swift公共组件'
 
 # This description is used to generate tags and improve search results.
@@ -48,7 +48,8 @@ TODO: Add long description of the pod here.
    s.dependency 'RxSwift', '~> 5'
    s.dependency 'RxCocoa', '~> 5'
    s.dependency 'Moya/RxSwift', '~> 14.0'
-   s.dependency 'HandyJSON', '5.0.2'
+   #pod 'HandyJSON',:git => 'https://github.com/alibaba/HandyJSON.git', :branch => 'dev_for_swift5.0'
+   s.dependency 'HandyJSON'
    s.dependency 'GRDB.swift', '~> 5.24.0'
    s.dependency 'ProgressHUD'
    s.dependency 'SnapKit'
