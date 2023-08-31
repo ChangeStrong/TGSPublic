@@ -168,7 +168,7 @@ public var isNeedLeftPanGesture:Bool = false{
 //            self.navigationController?.popViewController(animated: false)
         }else{
             LLog(TAG: TAG(self), "only diss Miss");
-            self.dismiss(animated: true)
+            self.dismiss(animated: false)
         }
     }
     
