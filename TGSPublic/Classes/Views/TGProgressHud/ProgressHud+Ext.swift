@@ -11,13 +11,13 @@ public extension ProgressHUD {
     class func showMessageAuto(_ text:String) -> Void {
         if Thread.current != Thread.main {
             DispatchQueue.main.async {
-                ProgressHUD.show(text)
+                ProgressHUD.animate(text)
                 DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(1000*2)) {
                     ProgressHUD.dismiss()
                 }
             }
         }else{
-            ProgressHUD.show(text)
+            ProgressHUD.animate(text)
             DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(1000*2)) {
                 ProgressHUD.dismiss()
             }

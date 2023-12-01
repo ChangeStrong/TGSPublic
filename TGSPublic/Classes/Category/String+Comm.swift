@@ -151,7 +151,30 @@ public extension String{
            return scan.scanInt(&val) && scan.isAtEnd
     
        }
-    
+    //包含数字
+     func containsNumber() -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: ".*[0-9].*", options: .caseInsensitive)
+            return regex.firstMatch(in: self, options: [], range: NSMakeRange(0, self.count)) != nil
+        } catch {
+            return false
+        }
+    }
+    //将字符串中首先碰到的连续数字取出来
+    static func extractFirstContinuousNumber(input: String) -> String? {
+        do {
+            let regex = try NSRegularExpression(pattern: "[0-9]+", options: .caseInsensitive)
+            if let match = regex.firstMatch(in: input, options: [], range: NSMakeRange(0, input.count)) {
+                let range = Range(match.range, in: input)
+                if let range = range {
+                    return String(input[range])
+                }
+            }
+        } catch {
+            return nil
+        }
+        return nil
+    }
     
 }
 
@@ -169,5 +192,31 @@ public extension String {
         guard let from = String.Index(from16, within: self) else { return nil }
         guard let to = String.Index(to16, within: self) else { return nil }
         return from ..< to
+    }
+    
+    //提取前几个文字 ，这个字符串可能是中文、英文或者日文 。 这两个文字不能是特殊字符 ，如果是英文的话， 提取前两个单词的首字母 ，如果没有两个单词那就提取一个单词 ，且这个单词如果长度超过两个也只取这个单词的前两个字母
+    func extractFirstTwoCharacters(count:Int) -> String {
+        // 使用正则表达式匹配中文、英文、和日文字符
+        let regex = try! NSRegularExpression(pattern: "([\\p{Script=Hani}\\p{Script=Hira}\\p{Script=Kana}]+|[A-Za-z]+)", options: [])
+        let matches = regex.matches(in: self, options: [], range: NSRange(self.startIndex..., in: self))
+        
+        var extractedText = ""
+        
+        for match in matches.prefix(count) {
+            if let range = Range(match.range, in: self) {
+                let text = String(self[range])
+                // 提取字符的前两个字母
+                let firstTwoCharacters = String(text.prefix(count))
+                extractedText += firstTwoCharacters
+            }
+            break
+        }
+        
+        if extractedText.isEmpty {
+            // 如果没有匹配到字符，则提取输入字符串的前两个字符
+            extractedText = String(self.prefix(count))
+        }
+        
+        return extractedText
     }
 }

@@ -29,21 +29,34 @@ public extension UIColor {
         return image!;
     }
     
-    var toHexString: String {
-            var r: CGFloat = 0
-            var g: CGFloat = 0
-            var b: CGFloat = 0
-            var a: CGFloat = 0
-            
-            self.getRed(&r, green: &g, blue: &b, alpha: &a)
-            
-            return String(
-                format: "%02X%02X%02X",
-                Int(r * 0xff),
-                Int(g * 0xff),
-                Int(b * 0xff)
-            )
+//    var toHexString: String {
+//            var r: CGFloat = 0
+//            var g: CGFloat = 0
+//            var b: CGFloat = 0
+//            var a: CGFloat = 0
+//            
+//            self.getRed(&r, green: &g, blue: &b, alpha: &a)
+//            
+//            return String(
+//                format: "%02X%02X%02X",
+//                Int(r * 0xff),
+//                Int(g * 0xff),
+//                Int(b * 0xff)
+//            )
+//        }
+    
+    func toHexString() -> String {
+            guard let components = cgColor.components, components.count >= 3 else {
+                return "000000" // 返回黑色作为默认值
+            }
+
+            let r = Int(components[0] * 255.0)
+            let g = Int(components[1] * 255.0)
+            let b = Int(components[2] * 255.0)
+
+            return String(format: "%02X%02X%02X", max(0, min(r, 255)), max(0, min(g, 255)), max(0, min(b, 255)))
         }
+    
     //列：FF5251
     convenience init(hex: String) {
         var colorHex = hex

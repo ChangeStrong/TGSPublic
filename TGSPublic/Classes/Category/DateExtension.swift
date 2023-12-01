@@ -37,7 +37,11 @@ public extension DateExtension{
       static func stringConvertDate(_ string:String, _ dateFormat:String="yyyy-MM-dd HH:mm:ss") -> Date {
           let dateFormatter = DateFormatter.init()
           dateFormatter.dateFormat = dateFormat
-          let date = dateFormatter.date(from: string)
+          var date = dateFormatter.date(from: string)
+          if date == nil {
+              date = Date()
+              LLog(TAG: TAG(self), "格式时间有问题 !!!");
+          }
           return date!
       }
     

@@ -8,8 +8,8 @@
 
 import UIKit
 import HandyJSON
-
-open class TGBaseModel: NSObject,HandyJSON,Codable {
+//@objcMembers 加上这个是方便我自己写的运行时方法起作用 主要用在文件的动画类里面
+ open class TGBaseModel: NSObject,HandyJSON,Codable {
     required public override init() {}
     
     //json转模型时

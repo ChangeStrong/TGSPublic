@@ -30,11 +30,15 @@ open class TGBaseVC: UIViewController {
             }
         }
     }
+    
 public var isNeedLeftPanGesture:Bool = false{
         didSet{
             //自定义侧滑手势
             if isNeedLeftPanGesture == true {
                 self.monitorLeftPanGesture()
+            }else{
+                //移除左滑手势
+                self.removeLeftPanGesture()
             }
         }
     }
@@ -53,6 +57,7 @@ public var isNeedLeftPanGesture:Bool = false{
         //导航条不透明
         self.navigationController?.navigationBar.isTranslucent = false
         self.initNavBarUI()
+        self.isNeedLeftPanGesture = true;
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +150,16 @@ public var isNeedLeftPanGesture:Bool = false{
         self.view.addGestureRecognizer(leftGesutre!)
     }
     
+    open func removeLeftPanGesture() -> Void {
+        if leftGesutre == nil {
+            LLog(TAG: TAG(self), "leftGesutre is nil.it isn't repeat to remove.!");
+            return
+        }
+        self.view.removeGestureRecognizer(leftGesutre!)
+        leftGesutre = nil
+    }
+    
+    
     @objc open func swipeLeftAction(gesture:UISwipeGestureRecognizer){
         LLog(TAG: TAG(self), "gesture direction=\(gesture.direction)");
         if gesture.direction == .right {
@@ -173,15 +188,7 @@ public var isNeedLeftPanGesture:Bool = false{
     }
     
     @objc open func leftBtnAction() -> Void {
-        if self.navigationController != nil {
-            if self.navigationController?.viewControllers.first != nil  && self.navigationController?.viewControllers.first == self{
-                self.navigationController?.dismiss(animated: false)
-            }else{
-                self.navigationController?.popViewController(animated: false)
-            }
-        }else{
-            self.dismiss(animated: true)
-        }
+        self.backAction()
         
     }
     
@@ -278,31 +285,32 @@ public var isNeedLeftPanGesture:Bool = false{
 
     // MARK: 弹框
     open  func showAlertDecompressInputPassword(_ completion:@escaping ((_ isSure:Bool,_ password:String?) -> Void)) {
-        
-        let alertController = UIAlertController(title: NSLocalizedString("Please enter the unzip password".localized, comment: ""),
-                        message: nil, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { alert in
-            completion(false,nil)
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: NSLocalizedString("Please enter the unzip password".localized, comment: ""),
+                            message: nil, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { alert in
+                completion(false,nil)
+            }
+            let okAction = UIAlertAction(title: "Sure".localized, style: .default, handler: {
+                action in
+                let textField: UITextField = (alertController.textFields?[0])!;
+                completion(true,textField.text)
+                //跳到定位设置
+            })
+            //添加输入框
+            alertController.addTextField { (textfield) in
+                textfield.delegate = self
+            }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            let popover:UIPopoverPresentationController? = alertController.popoverPresentationController;
+            if popover != nil {
+                popover!.sourceView = self.view;
+                popover!.sourceRect = CGRect.init(x: TGWidth(self.view)*0.5, y: TGHeight(self.view)*0.5, width: 1, height: 1);
+                popover!.permittedArrowDirections = .any
+            }
+            self.present(alertController, animated: true, completion: nil)
         }
-        let okAction = UIAlertAction(title: "Sure".localized, style: .default, handler: {
-            action in
-            let textField: UITextField = (alertController.textFields?[0])!;
-            completion(true,textField.text)
-            //跳到定位设置
-        })
-        //添加输入框
-        alertController.addTextField { (textfield) in
-            textfield.delegate = self
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        let popover:UIPopoverPresentationController? = alertController.popoverPresentationController;
-        if popover != nil {
-            popover!.sourceView = self.view;
-            popover!.sourceRect = CGRect.init(x: TGWidth(self.view)*0.5, y: TGHeight(self.view)*0.5, width: 1, height: 1);
-            popover!.permittedArrowDirections = .any
-        }
-        self.present(alertController, animated: true, completion: nil)
     }
     
     

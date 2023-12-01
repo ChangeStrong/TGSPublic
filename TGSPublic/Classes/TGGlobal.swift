@@ -24,6 +24,7 @@ public func websocketBaseUrlStr() -> String {
 }
 
 //**颜色相关
+//图标列表界面的图标颜色9298ad
 public var TGColorTheamMain = UIColor.init(hex: "FF5251")
 public var TGColorBGGray = UIColor.init(hex: "F0F0F0") //灰白
 public var TGColorBGWhiteGray = UIColor.init(hex: "FBFBFB") //淡白
@@ -183,7 +184,7 @@ public func TGRadianToDegrees(_ radian:CGFloat) -> CGFloat {
 public func TGFont(_ size:CGFloat) -> UIFont {
     // 20 24
     //UIFont.systemFont(ofSize: size)
-    //UIFont.init(name: "Mr Eaves XL Mod OT", size: size)
+    //UIFont.init(name: "AaJianHaoTi", size: TGX(30))
 //    let scale =  CGFloat(20.0/24.0)
     //TGX(size)
     if TGGlobal.isPhone() {
@@ -285,8 +286,8 @@ public class TGGlobal:NSObject{
     }
     
     public  class func getAppVersion() -> String{
-     let appVersion =   String(describing: Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString"));
-        return appVersion
+        let appVersion:String? =   Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String;
+        return appVersion ?? ""
     }
     
     /// 比较版本大小，返回是否需要更新
