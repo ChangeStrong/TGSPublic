@@ -25,15 +25,15 @@ public func websocketBaseUrlStr() -> String {
 
 //**颜色相关
 //图标列表界面的图标颜色9298ad
-public var TGColorTheamMain = UIColor.init(hex: "FF5251")
-public var TGColorBGGray = UIColor.init(hex: "F0F0F0") //灰白
-public var TGColorBGWhiteGray = UIColor.init(hex: "FBFBFB") //淡白
-public var TGColorBGWhiteD = UIColor.init(hex: "FDFDFD") //淡白--很接近白
-public var TGColorLine = UIColor.init(hex: "EFEFEF")
+public var TGColorTheamMain = UIColor.init(hexStr: "FF5251")
+public var TGColorBGGray = UIColor.init(hexStr: "F0F0F0") //灰白
+public var TGColorBGWhiteGray = UIColor.init(hexStr: "FBFBFB") //淡白
+public var TGColorBGWhiteD = UIColor.init(hexStr: "FDFDFD") //淡白--很接近白
+public var TGColorLine = UIColor.init(hexStr: "EFEFEF")
 //文字主颜色
 public var TGColorTextMain = UIColor.black
-public var TGColorTextGray6 = UIColor.init(hex: "6F6F6F")
-public var TGColorTextGray8 = UIColor.init(hex: "858585")//偏白一点的灰
+public var TGColorTextGray6 = UIColor.init(hexStr: "6F6F6F")
+public var TGColorTextGray8 = UIColor.init(hexStr: "858585")//偏白一点的灰
 ///系统的textfeild的placehord用的此颜色 c5c5c6
 public var TGColorTextGraySystem = UIColor.init(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.3)
 
@@ -569,7 +569,7 @@ public class TGGloabalUI{
         
         let label = UILabel()
         label.text = title
-        label.textColor = UIColor.init(hex: "474747")
+        label.textColor = UIColor.init(hexStr: "474747")
         label.font = TGFontBold(14)
         label.textAlignment = .left
         contentView.addSubview(label)

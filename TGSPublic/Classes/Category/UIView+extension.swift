@@ -23,12 +23,12 @@ public extension UIView{
         return visualEffectView
     }
     //添加过渡动画 duration 秒
-    func addTransitionAnimation(_ duration:Float, _ type:String,_ subTpe:CATransitionSubtype = .fromTop) {
+    func addTransitionAnimation(_ duration:Float, _ type:CATransitionType,_ subTpe:CATransitionSubtype = .fromTop) {
         
         // 立方体、吸收、翻转、波纹、翻页、反翻页、镜头开、镜头关
         let transition = CATransition()
         transition.duration = CFTimeInterval(duration)
-        transition.type = CATransitionType(rawValue: type)
+        transition.type = type//CATransitionType(rawValue: type)
         transition.subtype = subTpe
         self.layer.add(transition, forKey: "animation")
         

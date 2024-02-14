@@ -128,7 +128,7 @@ public var isNeedLeftPanGesture:Bool = false{
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = UIColor.init(hex: "F9F9F9")
+            appearance.backgroundColor = UIColor.init(hexStr:"F9F9F9")
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         } else {
@@ -427,7 +427,8 @@ public var isNeedLeftPanGesture:Bool = false{
         return label
     }()
     
-   
+   // TODO: 卡片
+    
     
     
     

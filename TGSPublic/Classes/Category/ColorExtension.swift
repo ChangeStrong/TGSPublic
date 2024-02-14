@@ -58,10 +58,10 @@ public extension UIColor {
         }
     
     //列：FF5251
-    convenience init(hex: String) {
-        var colorHex = hex
-        if hex.contains("#") {
-            colorHex = hex.replacingOccurrences(of: "#", with: "")
+    convenience init(hexStr: String) {
+        var colorHex = hexStr
+        if hexStr.contains("#") {
+            colorHex = hexStr.replacingOccurrences(of: "#", with: "")
         }
             let scanner = Scanner(string: colorHex)
             scanner.scanLocation = 0
