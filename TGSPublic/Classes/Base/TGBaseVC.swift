@@ -360,7 +360,7 @@ public var isNeedLeftPanGesture:Bool = false{
     }()
     
     
-    public var backBtnImg = UIImage.init(named: "public_back_arrow")
+    public var backBtnImg = UIImage.imageForModule("public_back_arrow")
     public  lazy var backBtn: TGExpandButton = {
         let view1 = UIImageView()
         view1.image = backBtnImg

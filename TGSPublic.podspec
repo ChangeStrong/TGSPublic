@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TGSPublic'
-  s.version          = '0.1.9'
+  s.version          = '0.2.0'
   s.summary          = 'swift公共组件'
 
 # This description is used to generate tags and improve search results.
@@ -27,6 +27,7 @@ TODO: Add long description of the pod here.
   s.author           = { 'ChangeStrong' => '491337430@qq.com' }
   s.source           = { :git => 'https://github.com/ChangeStrong/TGSPublic.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  #s.platform = :ios, '13.0'
   s.swift_version           = '5.0'
   s.ios.deployment_target = '13.0'
 
@@ -37,6 +38,10 @@ TODO: Add long description of the pod here.
   # }
 
    s.public_header_files = 'TGSPublic/Classes/**/*.h'
+   s.resource_bundles = {
+     'TGSPublic' => ['TGSPublic/Assets/*'],
+     'TGSPublicImages' => ['TGSPublic/Assets/*.{xib,gif,xcassets,mp3,jpg,png}']
+   }
    #s.frameworks = 'UIKit', 'MapKit', 'Foundation', 'AVFoundation', 'WebKit', 'Security'
    #s.libraries = 'commonCryptor'
   # s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libcommonCrypto' }
@@ -49,7 +54,7 @@ TODO: Add long description of the pod here.
    s.dependency 'RxCocoa', '~> 5'
    s.dependency 'Moya/RxSwift', '~> 14.0'
    #pod 'HandyJSON',:git => 'https://github.com/alibaba/HandyJSON.git', :branch => 'dev_for_swift5.0'
-   s.dependency 'HandyJSON'
+   s.dependency 'HandyJSON' , '~> 5.0.2'
    s.dependency 'GRDB.swift', '~> 5.24.0'
    s.dependency 'ProgressHUD'
    s.dependency 'SnapKit'
