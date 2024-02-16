@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TGSPublic'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'swift公共组件'
 
 # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
   #s.platform = :ios, '13.0'
   s.swift_version           = '5.0'
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'TGSPublic/Classes/**/*.{h,m,mm,swift}'
   
