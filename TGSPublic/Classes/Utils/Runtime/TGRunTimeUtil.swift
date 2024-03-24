@@ -21,7 +21,7 @@ public class TGRunTimeUtil {
         for item in propertyNames {
             let value = dict![item]
             if value == nil {
-                print("value is nil. key=\(item)")
+//                print("value is nil. key=\(item)")
                 continue
             }
             model.setValue(value!, forKey: item)
@@ -57,7 +57,7 @@ public class TGRunTimeUtil {
             }
             let value = dict![item]
             if value == nil {
-                print("value is nil. key=\(item)")
+//                print("value is nil. key=\(item)")
                 continue
             }
             model.setValue(value!, forKey: item)
@@ -90,7 +90,7 @@ public class TGRunTimeUtil {
             let value = fromModel.value(forKey: item)//取出值
 //            LLog(TAG: TAG(self), "复制的key=\(item) value=:\(String(describing: value))");
             if value == nil {
-                print("value is nil. key=\(item)")
+//                print("value is nil. key=\(item)")
                 continue
             }
             destModel.setValue(value!, forKey: item)
@@ -207,7 +207,7 @@ public struct TGDecoder {
     for item in propertyNames {
         let value = model.value(forKey: item)
         if value == nil {
-            print("value is nil. key=\(item)")
+//            print("value is nil. key=\(item)")
             continue
         }
         dict[item] = value

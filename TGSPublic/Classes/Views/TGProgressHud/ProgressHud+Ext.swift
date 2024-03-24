@@ -8,7 +8,7 @@
 import Foundation
 import ProgressHUD
 public extension ProgressHUD {
-    class func showMessageAuto(_ text:String) -> Void {
+      class func showMessageAuto(_ text:String) -> Void {
         if Thread.current != Thread.main {
             DispatchQueue.main.async {
                 ProgressHUD.animate(text)

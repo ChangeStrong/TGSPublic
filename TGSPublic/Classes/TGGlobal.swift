@@ -30,12 +30,15 @@ public var TGColorBGGray = UIColor.init(hexStr: "F0F0F0") //灰白
 public var TGColorBGWhiteGray = UIColor.init(hexStr: "FBFBFB") //淡白
 public var TGColorBGWhiteD = UIColor.init(hexStr: "FDFDFD") //淡白--很接近白
 public var TGColorLine = UIColor.init(hexStr: "EFEFEF")
+public var TGColorLineGraySystem = UIColor.init(hexStr: "a9adae")
 //文字主颜色
 public var TGColorTextMain = UIColor.black
 public var TGColorTextGray6 = UIColor.init(hexStr: "6F6F6F")
 public var TGColorTextGray8 = UIColor.init(hexStr: "858585")//偏白一点的灰
+public var TGColorBgCard = UIColor.init(hexStr: "feb3ab")//淡粉色
 ///系统的textfeild的placehord用的此颜色 c5c5c6
 public var TGColorTextGraySystem = UIColor.init(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.3)
+
 
 //默认网络加载失败占位图
 public var TGDefaultImgTwoBigLine = UIImage.init(named: "default_two_big_line")
@@ -90,6 +93,9 @@ public func TGNavStatusBarHeight() -> CGFloat {
 //        print("TGNavStatusBarHeight:\(NSNumber(value: Float(height)))")
         height = 20
     }
+//    if TGGlobal.isMac() {
+//        return 44
+//    }
     return height
 }
 
@@ -196,6 +202,18 @@ public func TGFont(_ size:CGFloat) -> UIFont {
         scale = 1 + (scale - 1.0)*0.7;
     }
     return UIFont.systemFont(ofSize:size*scale)
+}
+
+public func TGFontSize(_ size:CGFloat) -> CGFloat {
+//    if TGGlobal.isPhone() {
+//        return TGX(size)
+//    }
+    var scale:CGFloat = TGWIDTHScale();
+    if scale > 1.0 {
+        //如果是变大 将变大部分缩小到70%
+        scale = 1 + (scale - 1.0)*0.7;
+    }
+    return size*scale
 }
 
 public func TGFontBold(_ size:CGFloat) -> UIFont {

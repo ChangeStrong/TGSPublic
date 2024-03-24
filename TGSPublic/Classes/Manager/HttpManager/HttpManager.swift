@@ -140,6 +140,10 @@ extension HttpAPIManager: TargetType {
     public var task: Task {
         switch self {
         case .DownloadFullAddress( _):
+//            if self.params.isEmpty {
+                
+//                return .downloadDestination(downloadDestination)
+//            }
             return .downloadParameters(parameters: self.params, encoding: URLEncoding.default, destination: downloadDestination)
          case .GetHomeDetail( _):
               return .requestPlain
@@ -382,6 +386,8 @@ public class Http{
                             failure(error)
                         }
                     }
+        
+//        provider.request(<#T##target: HttpAPIManager##HttpAPIManager#>, completion: <#T##Completion##Completion##(_ result: Result<Response, MoyaError>) -> Void#>)
         
     }
     

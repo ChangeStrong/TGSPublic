@@ -29,7 +29,7 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
   #s.platform = :ios, '13.0'
   s.swift_version           = '5.0'
-  s.ios.deployment_target = '12.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'TGSPublic/Classes/**/*.{h,m,mm,swift}'
   
@@ -58,4 +58,9 @@ TODO: Add long description of the pod here.
    s.dependency 'GRDB.swift', '~> 5.24.0'
    s.dependency 'ProgressHUD'
    s.dependency 'SnapKit'
+   s.dependency 'UITextView+Placeholder'
+   s.dependency 'Kingfisher'
+   s.dependency 'MJRefresh'
+   s.dependency 'EmptyDataSet-Swift'
+   
 end

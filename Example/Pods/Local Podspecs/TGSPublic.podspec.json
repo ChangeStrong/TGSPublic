@@ -1,6 +1,6 @@
 {
   "name": "TGSPublic",
-  "version": "0.1.6",
+  "version": "0.2.1",
   "summary": "swift公共组件",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/ChangeStrong/TGSPublic",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/ChangeStrong/TGSPublic.git",
-    "tag": "0.1.6"
+    "tag": "0.2.1"
   },
   "swift_versions": "5.0",
   "platforms": {
@@ -21,6 +21,14 @@
   },
   "source_files": "TGSPublic/Classes/**/*.{h,m,mm,swift}",
   "public_header_files": "TGSPublic/Classes/**/*.h",
+  "resource_bundles": {
+    "TGSPublic": [
+      "TGSPublic/Assets/*"
+    ],
+    "TGSPublicImages": [
+      "TGSPublic/Assets/*.{xib,gif,xcassets,mp3,jpg,png}"
+    ]
+  },
   "dependencies": {
     "Alamofire": [
       "~> 5.0"
@@ -35,7 +43,7 @@
       "~> 14.0"
     ],
     "HandyJSON": [
-
+      "~> 5.0.2"
     ],
     "GRDB.swift": [
       "~> 5.24.0"

@@ -10,10 +10,15 @@ import UIKit
 import RxSwift
 import ProgressHUD
 import SnapKit
+@objc public protocol TGFileHandlerProtocol{
+    @objc optional  func handleNextNodeAction(_ node:Any,_ isNeedRemovedPreviousVC:UIViewController?)
+}
 open class TGBaseVC: UIViewController {
+    public weak var needRemovedVC:UIViewController? //如果上一个界面需要被移除传入
     //在视频出现的时候是否需要刷新
     public  var isNeedUpdateDataInViewWillAppear:Bool = false
-    
+    //点击文件执行的相关操作
+    public var fileDelegete:TGFileHandlerProtocol?
     public let disposeBag = DisposeBag()
     public var pageNumber:Int = 1
     //是否可以显示无任何数据的提示
@@ -22,7 +27,7 @@ open class TGBaseVC: UIViewController {
         didSet{
             if isNeedHiddenSystemNavBar == true{
                 if self.navigationController  != nil{
-                    oldNavBarHiddenStatus = self.navigationController!.isNavigationBarHidden
+//                    oldNavBarHiddenStatus = self.navigationController!.isNavigationBarHidden
                     self.navigationController?.isNavigationBarHidden = isNeedHiddenSystemNavBar;
                 }
             }else{
@@ -31,7 +36,7 @@ open class TGBaseVC: UIViewController {
         }
     }
     
-public var isNeedLeftPanGesture:Bool = false{
+    public var isNeedLeftPanGesture:Bool = false{
         didSet{
             //自定义侧滑手势
             if isNeedLeftPanGesture == true {
@@ -44,14 +49,17 @@ public var isNeedLeftPanGesture:Bool = false{
     }
     
     
-//   public func TAG() -> String {
-//        return self.className
-//    }
     public var oldNavBarHiddenStatus:Bool = false;
+    //用来监听点击返回--跳下一节点用
+    public enum TGKFinishedType {
+        case clickBackBtn //点击返回按钮
+    }
+    public typealias TGKFinishedBlock = (_ type: TGKFinishedType,_ tempVC:TGBaseVC) -> Void
+    public var kFinishedBlock:TGKFinishedBlock?
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-//        self.edgesForExtendedLayout = UIRectEdge.all
+        //        self.edgesForExtendedLayout = UIRectEdge.all
         self.extendedLayoutIncludesOpaqueBars = false
         self.automaticallyAdjustsScrollViewInsets = false
         //导航条不透明
@@ -63,9 +71,17 @@ public var isNeedLeftPanGesture:Bool = false{
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isNeedHiddenSystemNavBar == true {
+            if self.navigationController  != nil{
+                oldNavBarHiddenStatus = self.navigationController!.isNavigationBarHidden
+            }
             self.navigationController?.isNavigationBarHidden = true;
         }
-//        self.monitorWindowEvent()
+        //        self.monitorWindowEvent()
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.removePreviousVCOfNavgation() //移除上一个观看界面
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
@@ -76,14 +92,14 @@ public var isNeedLeftPanGesture:Bool = false{
                 self.navigationController?.isNavigationBarHidden = oldNavBarHiddenStatus;
             }
         }
-//        NotificationCenter.default.removeObserver(self, name: Notification.Name.init(rawValue: "NSWindowDidResizeNotification"), object: nil)
+        //        NotificationCenter.default.removeObserver(self, name: Notification.Name.init(rawValue: "NSWindowDidResizeNotification"), object: nil)
     }
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        LLog(TAG: TAG(self), "viewDidLayoutSubviews");
-//        if TGGlobal.isMac() {
-//
-//        }
+        //        LLog(TAG: TAG(self), "viewDidLayoutSubviews");
+        //        if TGGlobal.isMac() {
+        //
+        //        }
         self.windowSizeDidChangeAction()
     }
     //监听屏幕尺寸变化
@@ -99,29 +115,30 @@ public var isNeedLeftPanGesture:Bool = false{
             }
             self.windowSizeDidChangeAction()
         }
-       
-    }
-    //给子vc用来继承
-    open  func windowSizeDidChangeAction() -> Void {
-       
         
     }
     
-//    func monitorWindowEvent() -> Void {
-//        NotificationCenter.default.addObserver(self, selector: #selector(windowSizeChangeAction), name: Notification.Name.init(rawValue: "NSWindowDidResizeNotification"), object: nil)
-//    }
+    // MARK: 需要外部去实现的
+    //给子vc用来继承
+    open  func windowSizeDidChangeAction() -> Void {
+    }
+    
+    
+    //    func monitorWindowEvent() -> Void {
+    //        NotificationCenter.default.addObserver(self, selector: #selector(windowSizeChangeAction), name: Notification.Name.init(rawValue: "NSWindowDidResizeNotification"), object: nil)
+    //    }
     
     //初始化导航条UI
     //这个已经不起作用了
-   /*static func initNavigationBarUI() -> Void {
-        let bar = UINavigationBar.appearance()
-        var barAttrs: [NSAttributedString.Key : Any] = [:]
-        barAttrs[NSAttributedString.Key.font] = UIFont.boldSystemFont(ofSize: 18)
-        //[UIFont systemFontOfSize:18];
-    barAttrs[NSAttributedString.Key.foregroundColor] = UIColor.black
-        bar.titleTextAttributes = barAttrs
-        bar.setBackgroundImage(UIColor.init(hex: "F9F9F9").toImage(size: CGSize.init(width: 1.0, height: 1.0)), for: UIBarMetrics.default)
-    }*/
+    /*static func initNavigationBarUI() -> Void {
+     let bar = UINavigationBar.appearance()
+     var barAttrs: [NSAttributedString.Key : Any] = [:]
+     barAttrs[NSAttributedString.Key.font] = UIFont.boldSystemFont(ofSize: 18)
+     //[UIFont systemFontOfSize:18];
+     barAttrs[NSAttributedString.Key.foregroundColor] = UIColor.black
+     bar.titleTextAttributes = barAttrs
+     bar.setBackgroundImage(UIColor.init(hex: "F9F9F9").toImage(size: CGSize.init(width: 1.0, height: 1.0)), for: UIBarMetrics.default)
+     }*/
     //end
     
     open func initNavBarUI() -> Void {
@@ -138,6 +155,24 @@ public var isNeedLeftPanGesture:Bool = false{
     
     func initCustomNavBar() -> Void {
         
+    }
+    //移除navBar的上一个VC
+    public  func removePreviousVCOfNavgation() -> Void {
+        if self.needRemovedVC == nil {
+            //没有需要被移除的
+            return
+        }
+        if self.navigationController == nil {
+            return
+        }
+        self.navigationController?.viewControllers.removeAll(where: { tempVC in
+            if tempVC == self.needRemovedVC {
+                return true
+            }
+            return false
+        })
+        //清空-以防某个vc未释放
+        self.needRemovedVC = nil
     }
     // MARK: 手势监听
     var leftGesutre:UISwipeGestureRecognizer?
@@ -168,8 +203,13 @@ public var isNeedLeftPanGesture:Bool = false{
         }
     }
     
+   
+    
     // MARK: 事件
-     @objc open func backAction() -> Void {
+    @objc open func backAction() -> Void {
+        exitVC()
+    }
+    public func exitVC() -> Void {
         ProgressHUD.dismiss()
         if self.navigationController != nil {
             LLog(TAG: TAG(self), "count=\(self.navigationController!.viewControllers.count)");
@@ -180,7 +220,7 @@ public var isNeedLeftPanGesture:Bool = false{
                 self.navigationController?.popViewController(animated: false)
                 LLog(TAG: TAG(self), "nav pop");
             }
-//            self.navigationController?.popViewController(animated: false)
+            //            self.navigationController?.popViewController(animated: false)
         }else{
             LLog(TAG: TAG(self), "only diss Miss");
             self.dismiss(animated: false)
@@ -197,16 +237,16 @@ public var isNeedLeftPanGesture:Bool = false{
         
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     // MARK: deinit
     deinit {
         print("deinit- \(self.classForCoder)")
@@ -223,7 +263,7 @@ public var isNeedLeftPanGesture:Bool = false{
             }
             alert.addAction(action)
         }
-       
+        
         if cancelName != nil {
             let cancel = UIAlertAction(title: cancelName, style: .cancel){ (action) in
                 if cancelAction != nil{
@@ -254,8 +294,19 @@ public var isNeedLeftPanGesture:Bool = false{
     open  func showAlertType(_ type: UIAlertController.Style, title: String?, content: String?, titles array: [String]?, handler hander: LSAlertFinisheBlock?) {
         //UIAlertControllerStyleActionSheet
         let alertVC = UIAlertController(title: title, message: content, preferredStyle: type)
+        if TGGlobal.isPhone() == true {
+            //在ipad上 会没有那么大空间
+            let titleAttributes = [NSAttributedString.Key.font: TGFontBold(18), NSAttributedString.Key.foregroundColor: UIColor.black]
+            let titleString = NSAttributedString(string: title ?? "", attributes: titleAttributes)
+            alertVC.setValue(titleString, forKey: "attributedTitle")
+        }
+       
+//        let messageAttributes = [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 17)!, NSAttributedStringKey.foregroundColor: UIColor.red]
+//          let messageString = NSAttributedString(string: "Company name", attributes: messageAttributes)
+//        alertVC.setValue(messageString, forKey: "attributedMessage")
+        
         for i in 0..<(array?.count ?? 0) {
-            var cancel = UIAlertAction(title: array?[i] as? String, style: .default, handler: { action in
+            let cancel = UIAlertAction(title: array?[i] as? String, style: .default, handler: { action in
                 if hander != nil {
                     let str:String = array?[i] ?? "";
                     hander!(str,i)
@@ -272,6 +323,35 @@ public var isNeedLeftPanGesture:Bool = false{
         }
         present(alertVC, animated: true)
     }
+    
+    open  func showAlertInputTextType(_ type: UIAlertController.Style, title: String?, content: String?, placeHolder: String, buttonTitle:String, handler hander: LSAlertFinisheBlock?) {
+        //UIAlertControllerStyleActionSheet
+        let alertVC = UIAlertController(title: title, message: content, preferredStyle: type)
+        
+        alertVC.addTextField { text in
+            text.placeholder = placeHolder
+        }
+        
+        var cancel = UIAlertAction(title: buttonTitle, style: .default, handler: { action in
+            if hander != nil {
+                let str:String = alertVC.textFields?.first?.text ?? "";
+                hander!(str,0)
+            }
+        })
+        cancel.setValue(UIColor.blue, forKey: "titleTextColor")
+        alertVC.addAction(cancel)
+        
+        
+        let popover:UIPopoverPresentationController? = alertVC.popoverPresentationController;
+        if popover != nil {
+            popover!.sourceView = self.view;
+            popover!.sourceRect = CGRect.init(x: TGWidth(self.view)*0.5, y: TGHeight(self.view)*0.5, width: 1, height: 1);
+            popover!.permittedArrowDirections = .any
+        }
+        present(alertVC, animated: true)
+    }
+    
+    
     // MARK: 屏幕旋转
     open override var shouldAutorotate: Bool{
         return false;
@@ -282,12 +362,13 @@ public var isNeedLeftPanGesture:Bool = false{
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
         return .portrait;
     }
-
+    
+    
     // MARK: 弹框
     open  func showAlertDecompressInputPassword(_ completion:@escaping ((_ isSure:Bool,_ password:String?) -> Void)) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: NSLocalizedString("Please enter the unzip password".localized, comment: ""),
-                            message: nil, preferredStyle: .alert)
+                                                    message: nil, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { alert in
                 completion(false,nil)
             }
@@ -373,7 +454,7 @@ public var isNeedLeftPanGesture:Bool = false{
         }
         
         let view = TGExpandButton()
-//        view.setBackgroundImage(UIImage.init(named: "public_back_arrow"), for: UIControl.State.normal)
+        //        view.setBackgroundImage(UIImage.init(named: "public_back_arrow"), for: UIControl.State.normal)
         view.backgroundColor = UIColor.clear
         view.addTarget(self, action: #selector(backAction), for: UIControl.Event.touchUpInside)
         self.navBar.addSubview(view)
@@ -385,7 +466,7 @@ public var isNeedLeftPanGesture:Bool = false{
     
     public    lazy var navLeftBtn: TGExpandButton = {
         let view = TGExpandButton()
-//        view.setTitle(LocalString("Cancel"), for: UIControl.State.normal)
+        //        view.setTitle(LocalString("Cancel"), for: UIControl.State.normal)
         view.setTitleColor(TGColorTextGray6, for: UIControl.State.normal)
         view.backgroundColor = UIColor.clear
         view.titleLabel?.font = TGFont(16)
@@ -420,6 +501,7 @@ public var isNeedLeftPanGesture:Bool = false{
         let label = UILabel()
         label.textColor = UIColor.black
         label.font = TGFontBold(18)
+        label.textAlignment = .center
         self.navBar.addSubview(label)
         label.snp.makeConstraints { (make) in
             make.center.equalTo(self.navBar).offset(0)
@@ -427,7 +509,7 @@ public var isNeedLeftPanGesture:Bool = false{
         return label
     }()
     
-   // TODO: 卡片
+    
     
     
     

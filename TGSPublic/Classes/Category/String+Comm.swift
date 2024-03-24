@@ -151,6 +151,16 @@ public extension String{
            return scan.scanInt(&val) && scan.isAtEnd
     
        }
+    //是否是纯数字
+    func isNumeric() -> Bool {
+        let pattern = "^[0-9]+$"
+        if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+            let matches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count))
+            return !matches.isEmpty
+        }
+        return false
+    }
+    
     //包含数字
      func containsNumber() -> Bool {
         do {

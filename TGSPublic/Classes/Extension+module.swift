@@ -7,8 +7,11 @@
 
 import Foundation
 
-extension String{
-    class NoUse {}
+
+fileprivate class NoUse {
+    
+}
+extension Bundle{
     static func bundleForModule() -> Bundle{
         let resourceBundle = Bundle(path: Bundle(for: NoUse.self).path(forResource: "TGSPublic", ofType: "bundle") ?? "")
         return resourceBundle!;
@@ -18,15 +21,17 @@ extension String{
         let resourceBundle = Bundle(path: Bundle(for: NoUse.self).path(forResource: "TGSPublicImages", ofType: "bundle") ?? "")
         return resourceBundle!;
     }
-    
+}
+
+extension String{
     var localeForModule: String {
-        let msg = NSLocalizedString(self, tableName: nil, bundle: String.bundleForModule(), value: "", comment: "")
+        let msg = NSLocalizedString(self, tableName: nil, bundle: Bundle.bundleForModule(), value: "", comment: "")
         return msg
     }
 }
 
 extension UIImage{
     static func imageForModule(_ name:String) -> UIImage?{
-        return  UIImage.init(named: name, in: String.bundleForImages(), with: nil)
+        return  UIImage.init(named: name, in: Bundle.bundleForImages(), with: nil)
     }
 }
