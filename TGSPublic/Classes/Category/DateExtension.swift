@@ -99,32 +99,63 @@ public extension DateExtension{
         var result:String = ""
         var temp:Double = 0
         if timeInterval/60 < 1 {
-            result = "刚刚"
+            result = "just now".localeForModule
             
         }else if (timeInterval/60) < 60{
             temp = timeInterval/60
-            result = "\(Int(temp))分钟前"
+            result = "\(Int(temp))" + " minutes ago".localeForModule
         }else if timeInterval/(60 * 60) < 24 {
             
             temp = timeInterval/(60*60)
-            result = "\(Int(temp))小时前"
+            result = "\(Int(temp))" + " hour ago".localeForModule
             
         }else if timeInterval/(24 * 60 * 60) < 30  {
             
             temp = timeInterval / (24 * 60 * 60)
-            result = "\(Int(temp))天前"
+            result = "\(Int(temp))" + " day ago".localeForModule
             
         }else if timeInterval/(30 * 24 * 60 * 60)  < 12 {
             
             temp = timeInterval/(30 * 24 * 60 * 60)
-            result = "\(Int(temp))个月前"
+            result = "\(Int(temp))" + " month ago".localeForModule
             
         }else{
             temp = timeInterval/(12 * 30 * 24 * 60 * 60)
-            result = "\(Int(temp))年前"
+            result = "\(Int(temp))" + " year ago".localeForModule
         }
         return result
     }
+    
+   static func fetchFormatTimeBySeconds(_ timeInterval:TimeInterval) -> String {
+        var result:String = ""
+        var temp:Double = 0
+        if timeInterval/60 < 1 {
+            result =  "\(Int(temp))" + " second".localeForModule
+        }else if (timeInterval/60) < 60{
+            temp = timeInterval/60
+            result = "\(Int(temp))" + " minutes".localeForModule
+        }else if timeInterval/(60 * 60) < 24 {
+            
+            temp = timeInterval/(60*60)
+            result = "\(Int(temp))" + " hour".localeForModule
+            
+        }else if timeInterval/(24 * 60 * 60) < 30  {
+            
+            temp = timeInterval / (24 * 60 * 60)
+            result = "\(Int(temp))" + " day".localeForModule
+            
+        }else if timeInterval/(30 * 24 * 60 * 60)  < 12 {
+            
+            temp = timeInterval/(30 * 24 * 60 * 60)
+            result = "\(Int(temp))" + " month".localeForModule
+            
+        }else{
+            temp = timeInterval/(12 * 30 * 24 * 60 * 60)
+            result = "\(Int(temp))" + " year".localeForModule
+        }
+        return result
+    }
+    
     
     func distanceNowTime() -> String {
         let currentDate:Date = Date();

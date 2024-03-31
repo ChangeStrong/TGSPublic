@@ -41,15 +41,17 @@ public class WebUtil{
     
     //清除指定域名的缓存 baidu.com
     public static  func clearWKWebViewCache(forDomain domain: String) {
-        let websiteDataTypes = NSSet(array: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache])
-        let dataStore = WKWebsiteDataStore.defaultDataStoreConfiguration()
+        DispatchQueue.main.async {
+            let websiteDataTypes = NSSet(array: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache])
+            let dataStore = WKWebsiteDataStore.defaultDataStoreConfiguration()
 
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: websiteDataTypes as! Set<String>) { records in
-            for record in records {
-                if record.displayName.contains(domain) {
-                    WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {
-                        print("Cache cleared for \(record.displayName)")
-                    })
+            WKWebsiteDataStore.default().fetchDataRecords(ofTypes: websiteDataTypes as! Set<String>) { records in
+                for record in records {
+                    if record.displayName.contains(domain) {
+                        WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {
+                            print("Cache cleared for \(record.displayName)")
+                        })
+                    }
                 }
             }
         }

@@ -24,3 +24,15 @@
 "Sure"="确定";
 "Mode"="模式";
 "Whether to switch to page turning mode"="是否切换为翻页模式";
+" second"="秒";
+" minutes"="分";
+" hour"="时";
+" day"="日";
+" month"="月";
+" year"="年";
+"just now"="刚刚";
+" minutes ago"="分前";
+" hour ago"="时前";
+" day ago"="天前";
+" month ago"="个月前";
+" year ago"="年前";
