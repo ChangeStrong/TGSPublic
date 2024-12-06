@@ -64,7 +64,13 @@ public extension String {
         let range = NSRange(location: 0, length: self.utf16.count)
         return regex.firstMatch(in: self, options: [], range: range) != nil
     }
-   
+    //提取域名 比如:http://www.baidu.com
+    func extractDomain() -> String {
+        guard let url = URL(string: self) else { return "" }
+        return "\(url.scheme ?? "")://\(url.host ?? "")"
+    }
+    
+   //提取链接中的参数
     static func fetchUrlParam(_ param: String?, url: String?) -> String? {
            let regTags = "(^|&|\\?)+\(param ?? "")=+([^&]*)(&|$)"
            var regex: NSRegularExpression? = nil
@@ -89,6 +95,19 @@ public extension String {
         let hexColorPattern = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{7})$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", hexColorPattern)
         return predicate.evaluate(with: self)
+    }
+    
+    // 判断字符串是否包含中文的函数
+    func containsChinese() -> Bool {
+        do {
+                let regex = try NSRegularExpression(pattern: "[\\u4e00-\\u9fff]+", options: .caseInsensitive)
+                let range = NSRange(location: 0, length: self.utf16.count)
+                let matches = regex.matches(in: self, options: [], range: range)
+                return !matches.isEmpty
+            } catch {
+                print("Error creating regex: \(error.localizedDescription)")
+                return false
+            }
     }
     
 }

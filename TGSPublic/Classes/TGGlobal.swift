@@ -38,6 +38,8 @@ public var TGColorTextGray8 = UIColor.init(hexStr: "858585")//偏白一点的灰
 public var TGColorBgCard = UIColor.init(hexStr: "feb3ab")//淡粉色
 ///系统的textfeild的placehord用的此颜色 c5c5c6
 public var TGColorTextGraySystem = UIColor.init(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.3)
+///vip文字颜色
+public var TGColorVipText = UIColor.init(hexStr: "#ffd700")//金色
 
 
 //默认网络加载失败占位图
@@ -234,6 +236,15 @@ public func TGFontBold(_ size:CGFloat) -> UIFont {
     }
     return UIFont.boldSystemFont(ofSize:size*scale)
 }
+//行间距和字间距
+public func TGFontSpaceSize(_ size:CGFloat) -> CGFloat {
+    var scale:CGFloat = TGWIDTHScale();
+    if scale > 1.0 {
+        //如果是变大 将变大部分缩小到70%
+        scale = 1 + (scale - 1.0)*0.7;
+    }
+    return size*scale
+}
 
 public func LocalString(_ key:String) -> String {
   return  NSLocalizedString(key, tableName: "Localizable", bundle: Bundle.main, value: "", comment: "")
@@ -372,7 +383,6 @@ public class TGGlobal:NSObject{
     }
     
     //是手机
-    
     public class func isPhone() -> Bool {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return true
@@ -396,6 +406,13 @@ public class TGGlobal:NSObject{
             // Fallback on earlier versions
         }
         return false
+    }
+    public class func getMacMajorVersion() -> Int{
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let majorVersion = osVersion.majorVersion
+//        let minorVersion = osVersion.minorVersion
+//        let patchVersion = osVersion.patchVersion
+        return majorVersion
     }
     
     public class func isSimulator() -> Bool {

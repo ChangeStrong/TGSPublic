@@ -13,7 +13,9 @@ import SnapKit
 @objc public protocol TGFileHandlerProtocol{
     @objc optional  func handleNextNodeAction(_ node:Any,_ isNeedRemovedPreviousVC:UIViewController?)
 }
+public  let kNavBarHeight:CGFloat = 44;
 open class TGBaseVC: UIViewController {
+   
     public weak var needRemovedVC:UIViewController? //如果上一个界面需要被移除传入
     //在视频出现的时候是否需要刷新
     public  var isNeedUpdateDataInViewWillAppear:Bool = false
@@ -324,11 +326,16 @@ open class TGBaseVC: UIViewController {
         present(alertVC, animated: true)
     }
     
-    open  func showAlertInputTextType(_ type: UIAlertController.Style, title: String?, content: String?, placeHolder: String, buttonTitle:String, handler hander: LSAlertFinisheBlock?) {
+    open  func showAlertInputTextType(_ type: UIAlertController.Style, title: String?, content: String?, placeHolder: String, buttonTitle:String, handler hander: LSAlertFinisheBlock?){
+        showAlertInputTextType(type, title: title, content: content, placeHolder: placeHolder, buttonTitle: buttonTitle, .default, handler: hander)
+    }
+    
+    open  func showAlertInputTextType(_ type: UIAlertController.Style, title: String?, content: String?, placeHolder: String, buttonTitle:String, _ keyboardType:UIKeyboardType = .default,handler hander: LSAlertFinisheBlock?) {
         //UIAlertControllerStyleActionSheet
         let alertVC = UIAlertController(title: title, message: content, preferredStyle: type)
         
         alertVC.addTextField { text in
+            text.keyboardType = keyboardType
             text.placeholder = placeHolder
         }
         
@@ -348,7 +355,8 @@ open class TGBaseVC: UIViewController {
             popover!.sourceRect = CGRect.init(x: TGWidth(self.view)*0.5, y: TGHeight(self.view)*0.5, width: 1, height: 1);
             popover!.permittedArrowDirections = .any
         }
-        present(alertVC, animated: true)
+        
+        self.present(alertVC, animated: true)
     }
     
     
@@ -423,7 +431,6 @@ open class TGBaseVC: UIViewController {
     }
     
     // MARK: 自定义button
-    
     public lazy var navBar: UIView = {
         //隐藏系统的navBar
         self.isNeedHiddenSystemNavBar = true;
@@ -435,7 +442,7 @@ open class TGBaseVC: UIViewController {
         view.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.snp.top).offset(statusBarHeight);
             make.left.right.equalTo(self.view).offset(0);
-            make.height.equalTo(44);
+            make.height.equalTo(kNavBarHeight);
         }
         return view
     }()
@@ -505,6 +512,7 @@ open class TGBaseVC: UIViewController {
         self.navBar.addSubview(label)
         label.snp.makeConstraints { (make) in
             make.center.equalTo(self.navBar).offset(0)
+            make.width.equalTo(self.navBar).multipliedBy(8.0/10.0)
         }
         return label
     }()

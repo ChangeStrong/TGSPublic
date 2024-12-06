@@ -10,6 +10,7 @@ import Foundation
 import Moya
 
 public var TGHttpBaseUrlPath = "http://116.62.172.2:80/"
+public var TGUploadFileBasseAdressType:Int = 16//默认酵母菌国内
 public func TGGetHttpBaseUrl() -> String {
     if TGAppEnviroment == 0 {
         return "http://127.0.0.1:8888/Comic/"
@@ -24,8 +25,25 @@ public func TGGetUploadFileBasseAdressType() -> Int {
 //        return 13;
 //    }else{
         //酵母菌国内
-        return 16;
+//        return 16;
 //    }
+    //目前文件存到火漫社里面吧
+//    return 40;
+    return TGUploadFileBasseAdressType;
+}
+public func TGGetQiniuDomainBaseUrl() -> String{
+    switch TGGetUploadFileBasseAdressType() {
+    case 16:
+        return "http://guangdong.yeast.plus/";
+//        break
+    case 40:
+        //
+        return "http://hotcommunity.yeast.plus/";
+//        break
+    default:
+        break
+    }
+    return "";
 }
 
 //使用域名的方式--分享链接需要
@@ -46,25 +64,40 @@ public enum HttpAPIManager{
     case PostMethod1(Dictionary<String, Any>) //根据关键字搜索
     case getCityInfo1
     case getCityInfo2
+    case CommonFullUrl(Dictionary<String, Any>) // 通用普通请求
 }
 //提供给外部组件重新设置请求头
 public var TGHttpHeadersDict:[String : String]?
 extension HttpAPIManager: TargetType {
-
+   
     public var headers: [String : String]? {
-        if TGHttpHeadersDict != nil {
-            //外部组件有重新设置请求头
-            return TGHttpHeadersDict
+        var dict0:[String:String] = [:]
+        
+        switch self {
+        case .CommonFullUrl(let dict):
+            if let tempHeader = dict["mHeaders"] as? Dictionary<String,String> {
+                //外部有传
+                return tempHeader;
+            }
+            break
+        default:
+            if TGHttpHeadersDict != nil {
+                //外部组件有重新设置请求头
+                return TGHttpHeadersDict
+            }
+            if TGGlobal.isMac() {
+                dict0["platform"] = "mac";
+            }else{
+                dict0["platform"] = "iOS";
+            }
+            dict0["deviceType"] = TGGlobal.deviceType()
+            dict0["deviceLanguage"] = "varialble_Local_Laungue".localized
+            return dict0
+//            break
         }
-        var dict:[String:String] = [:]
-        if TGGlobal.isMac() {
-            dict["platform"] = "mac";
-        }else{
-            dict["platform"] = "iOS";
-        }
-        dict["deviceType"] = TGGlobal.deviceType()
-        dict["deviceLanguage"] = "varialble_Local_Laungue".localized
-        return dict
+
+        
+        return dict0
     }
     
     /// The target's base `URL`.
@@ -75,6 +108,10 @@ extension HttpAPIManager: TargetType {
         case .getCityInfo2:
             return URL.init(string: "https://extreme-ip-lookup.com")!
         case .DownloadFullAddress(let dict):
+            let tempStr:String = dict["mUrl"] as! String
+            let temp:String = tempStr.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlFragmentAllowed)!
+            return URL.init(string: temp)!
+        case .CommonFullUrl(let dict):
             let tempStr:String = dict["mUrl"] as! String
             let temp:String = tempStr.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlFragmentAllowed)!
             return URL.init(string: temp)!
@@ -92,6 +129,8 @@ extension HttpAPIManager: TargetType {
             return "json/";
         case .DownloadFullAddress( _): // 不带参数的请求
             return ""
+        case .CommonFullUrl(_): //无需追加路径了
+            return ""
         case .GetHomeDetail(let id):  // 带参数的请求
             return "4/theme/\(id)"
         case .PostMethod1(let dict):
@@ -107,6 +146,11 @@ extension HttpAPIManager: TargetType {
         case .getCityInfo2:
             return .get;
         case .DownloadFullAddress( _): // 不带参数的请求
+            return .get
+        case .CommonFullUrl(let  dict): // 不带参数的请求
+            if let tempMethod = dict["mMethod"] as? String,tempMethod == "post" {
+                return .post;
+            }
             return .get
         case .GetHomeDetail(let id):  // 带参数的请求
             return .post
@@ -151,6 +195,15 @@ extension HttpAPIManager: TargetType {
             return .requestPlain;
         case .getCityInfo2:
             return .requestPlain;
+        case .CommonFullUrl(let dict):
+            if let tempMethod = dict["mMethod"] as? String,tempMethod == "post",
+               let foramt = dict["mRequestBodyFormat"] as? String,foramt == "json"{
+                //以json格式发送body
+                let bodyStr = TGGlobal.getJSONStringFrom(obj: self.params)
+                let bodyData:Data = bodyStr.data(using: .utf8) ?? Data();
+                return .requestCompositeData(bodyData: bodyData, urlParameters: [:])
+            }
+            return .requestPlain;
         default:
             return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
          }
@@ -171,6 +224,21 @@ extension HttpAPIManager: TargetType {
         case .DownloadFullAddress(let dict):
             params.merge(dict: dict)
             break;
+        case .CommonFullUrl(let dict):
+            params.merge(dict: dict)
+            if params.keys.contains("mUrl") {
+                params.removeValue(forKey: "mUrl")
+            }
+            if params.keys.contains("mMethod") {
+                params.removeValue(forKey: "mMethod")
+            }
+            if params.keys.contains("mHeaders") {
+                params.removeValue(forKey: "mHeaders")
+            }
+            if params.keys.contains("mRequestBodyFormat") {
+                params.removeValue(forKey: "mRequestBodyFormat")
+            }
+            break;
         case .GetHomeDetail( _):
             return params
         case .PostMethod1(let dict):
@@ -185,6 +253,7 @@ extension HttpAPIManager: TargetType {
                 params = params2;
             }
             break;
+            
         default:
             return params
         }

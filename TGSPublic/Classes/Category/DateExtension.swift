@@ -22,7 +22,7 @@ public extension DateExtension{
         case Saturday = 7
     }
     
-    func date(withFormat format: String?) -> String? {
+    func date(withFormat format: String?) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.string(from: self)
@@ -91,7 +91,7 @@ public extension DateExtension{
         return ""
     }
     
-    func formatSimpleExpress() -> String{
+func formatSimpleExpress() -> String{
         let currentDate:Date = Date();
         var timeInterval:TimeInterval = currentDate.timeIntervalSince(self);
         //毫秒转为秒

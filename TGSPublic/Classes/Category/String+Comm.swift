@@ -12,14 +12,29 @@ public extension String{
     /// url编码
     ///
     /// - Returns: NSString
-   public func urlEncode() -> String? {
+    func urlEncode() -> String? {
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: KUrlCodingReservedCharacters).inverted)
         
     }
     
+   
+    
     func urlEncodeOnlyUTF8() -> String? {
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "").inverted)! 
         
+    }
+    func urlEncodeForKF() -> String {
+        guard let encodedPath = self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            LLog(TAG: TAG(self), "URL encoding failed.!! path=\(self)");
+            return self
+        }
+        return encodedPath
+    }
+    //将链接替换为文件名
+    func replaceUrlToFileName() -> String {
+//        let filename = self.replacingOccurrences(of: "/\\:*?\"<>|", with: "_")
+        let filename = self.replacingOccurrences(of: "[^a-zA-Z0-9._]", with: "_", options: .regularExpression)
+        return filename;
     }
     
     /// url解码
@@ -184,6 +199,65 @@ public extension String{
             return nil
         }
         return nil
+    }
+    //只提取取中文和英文字符
+    func filterChineseAndEnglishCharacters() -> String {
+        // 定义一个正则表达式，匹配中文字符和英文字符
+        let regexPattern = "([\\u4e00-\\u9fa5a-zA-Z])"
+        let regex = try! NSRegularExpression(pattern: regexPattern, options: [])
+        
+        // 查找所有匹配项
+        let nsString = self as NSString
+        let results = regex.matches(in: self, range: NSRange.init(location: 0, length: nsString.length))
+        
+        // 提取匹配项并构建结果字符串
+        var resultString = ""
+        for result in results {
+            let range = result.range
+            let substring = nsString.substring(with: range)
+            resultString.append(substring)
+        }
+        
+        return resultString
+    }
+    //从文章中提取遇到第一行有可见字符的字符串--用来给文件命名使用
+    func fetchFirstLineStr() -> String {
+        var tempStr = self.replacingOccurrences(of: "￼", with: "")//移除其中的图片占位符
+        // 将字符串按换行符分割成数组
+        let lines = tempStr.components(separatedBy: .newlines)
+        var firstLine: String = ""
+        let customWhitespaceSet = CharacterSet(charactersIn: "\u{FFC}\u{160}\u{2000}-\u{200F}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}")
+        for line in lines {
+
+            let line1 = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            let line2 = line1.filterChineseAndEnglishCharacters()
+            if !line2.isEmpty {
+                // 找到首行有可见字符的行
+                firstLine = line2
+                break // 找到包含可见字符的行，跳出循环
+            }
+        }
+        
+        // 获取第一行
+        if firstLine.isEmpty == false {
+            // 移除字符串首尾的空格和换行符
+//            let trimmedFirstLine = firstLine.trimmingCharacters(in: .whitespacesAndNewlines)
+            tempStr = firstLine
+            print(tempStr)  // 输出: "Hello, World!"
+        } else {
+            //字符串没有换行符
+            if self.count > 50 {
+                //名字过长只取前五十个
+                tempStr = String(tempStr[tempStr.startIndex..<tempStr.index(tempStr.startIndex, offsetBy: 50)])
+            }
+            
+            //移除空格这些
+            tempStr = tempStr.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        if tempStr.isEmpty {
+            tempStr = "unkhow";
+        }
+        return tempStr;
     }
     
 }

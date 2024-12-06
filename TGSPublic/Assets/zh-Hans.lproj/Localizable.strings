@@ -5,6 +5,7 @@
   Created by luo luo on 2023/6/5.
   
 */
+"varialble_Local_Laungue"="Chinese";
 "Previous"="上一章";
 "Next"="下一章";
 "Catalog"="目录";
@@ -36,3 +37,4 @@
 " day ago"="天前";
 " month ago"="个月前";
 " year ago"="年前";
+
