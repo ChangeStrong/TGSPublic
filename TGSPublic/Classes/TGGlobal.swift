@@ -461,7 +461,7 @@ public class TGGlobal:NSObject{
         let jsonData:Data = jsonString.data(using: .utf8)!
         let dict = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
         if dict == nil {
-            LLog(TAG: TAG(self), "get dict failture.!");
+//            LLog(TAG: TAG(self), "get dict failture.!");
         }
         return dict as? Dictionary<String, Any>
     }

@@ -203,7 +203,7 @@ public extension String{
     //只提取取中文和英文字符
     func filterChineseAndEnglishCharacters() -> String {
         // 定义一个正则表达式，匹配中文字符和英文字符
-        let regexPattern = "([\\u4e00-\\u9fa5a-zA-Z])"
+        let regexPattern = "([\\u4e00-\\u9fa5a-zA-Z0-9])"
         let regex = try! NSRegularExpression(pattern: regexPattern, options: [])
         
         // 查找所有匹配项

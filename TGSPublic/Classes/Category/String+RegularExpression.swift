@@ -109,5 +109,40 @@ public extension String {
                 return false
             }
     }
+    ///获取三个大括号中的内容{{{xxx}}}
+    func fetchContentOfThreeBrace() -> String {
+        // 创建一个正则表达式来匹配被三个大括号包围的文本
+        let pattern = #"\{\{\{(.*?)\}\}\}"#
+        do {
+            // 编译正则表达式
+            let regex = try NSRegularExpression(pattern: pattern, options: [])
+            
+            // 定义搜索范围为整个字符串
+            let nsRange = NSRange(self.startIndex..<self.endIndex, in: self)
+            
+            // 查找所有匹配项
+            let matches = regex.matches(in: self, options: [], range: nsRange)
+            
+            // 遍历所有匹配项并打印结果
+            for match in matches {
+                if let range = Range(match.range(at: 1), in: self) {
+                    let matchedText = self[range]
+//                    print("正则匹配到的总结文字是：\(matchedText)")
+                    return "\(matchedText)"
+                }
+            }
+            
+            if let range = self.range(of: "{{{"),let range2 = self.range(of: "}}}") {
+                let  tempStr2 = String(self[range.upperBound..<range2.lowerBound])
+                print("正则未获取到 fetch by handle is \(String(tempStr2))")
+                return tempStr2;
+            }else{
+                print("正则未匹配到的三个大括号 matches是：\(matches)")
+            }
+        } catch let error {
+            print("正则表达式失败: \(error.localizedDescription)")
+        }
+        return ""
+    }
     
 }
