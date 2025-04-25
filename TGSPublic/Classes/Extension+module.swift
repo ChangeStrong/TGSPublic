@@ -25,7 +25,9 @@ extension Bundle{
 
 extension String{
     var localeForModule: String {
-        let msg = NSLocalizedString(self, tableName: nil, bundle: Bundle.bundleForModule(), value: "", comment: "")
+        //此处指定语言所放的目录
+        let languageBundel:Bundle = Bundle(path: Bundle.bundleForModule().path(forResource: "language", ofType: nil)!)!
+        let msg = NSLocalizedString(self, tableName: nil, bundle: languageBundel, value: "", comment: "")
         return msg
     }
 }

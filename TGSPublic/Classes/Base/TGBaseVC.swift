@@ -440,7 +440,7 @@ open class TGBaseVC: UIViewController {
         view.backgroundColor = UIColor.clear;
         self.view.addSubview(view)
         view.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp.top).offset(statusBarHeight);
+            make.top.equalTo(self.view.safeAreaLayoutGuide)//.offset(statusBarHeight);
             make.left.right.equalTo(self.view).offset(0);
             make.height.equalTo(kNavBarHeight);
         }
@@ -512,7 +512,7 @@ open class TGBaseVC: UIViewController {
         self.navBar.addSubview(label)
         label.snp.makeConstraints { (make) in
             make.center.equalTo(self.navBar).offset(0)
-            make.width.equalTo(self.navBar).multipliedBy(8.0/10.0)
+            make.width.equalTo(self.navBar).multipliedBy(6.0/10.0)
         }
         return label
     }()

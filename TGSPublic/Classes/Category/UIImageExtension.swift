@@ -308,6 +308,38 @@ public extension UIImage{
         return tempImage;
     }
     
+  
+    //将图片从中间分成两张
+    func splitImageIntoTwoParts() -> (leftImage: UIImage?, rightImage: UIImage?) {
+        // 获取图片的尺寸
+        guard let cgImage = self.cgImage else {
+            print("无法获取图片的 CGImage")
+            return (nil, nil)
+        }
+        
+        let width = cgImage.width
+        let height = cgImage.height
+        
+        // 计算分割点（中间位置）
+        let midX = width / 2
+        
+        // 创建左半部分的图片
+        if let leftPart = cgImage.cropping(to: CGRect(x: 0, y: 0, width: midX, height: height)) {
+            let leftImage = UIImage(cgImage: leftPart)
+            
+            // 创建右半部分的图片
+            if let rightPart = cgImage.cropping(to: CGRect(x: midX, y: 0, width: width - midX, height: height)) {
+                let rightImage = UIImage(cgImage: rightPart)
+                
+                // 返回分割后的两张图片
+                return (leftImage, rightImage)
+            }
+        }
+        
+        // 如果分割失败，返回 nil
+        return (nil, nil)
+    }
+    
    class func blurImage(_ image: UIImage, withBlurNumber blur: CGFloat) -> UIImage {
         
             let context = CIContext(options: nil)

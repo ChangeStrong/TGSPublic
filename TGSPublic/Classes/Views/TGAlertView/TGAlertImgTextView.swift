@@ -132,6 +132,7 @@ public class TGAlertImgTextView: UIView,UITextViewDelegate {
         text.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
         text.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: range)
         self.share.textView.attributedText = text
+        self.share.textView.isEditable = false
         self.share.isShowing = true;
         self.share.fartherWindow?.addSubview(self.share)
         self.share.fartherWindow?.bringSubviewToFront(self.share)
@@ -172,6 +173,7 @@ public class TGAlertImgTextView: UIView,UITextViewDelegate {
     
     func clickBgAction2() -> Void {
         TGAlertImgTextView.remove()
+        TGAlertImgTextView.share.sureBtn.setTitle("Adopt".localeForModule, for: UIControl.State.normal)
     }
     
 //    @objc func clickBgAction2(){
@@ -232,7 +234,7 @@ public class TGAlertImgTextView: UIView,UITextViewDelegate {
         return view
     }()
     
-    lazy var sureBtn: UIButton = {
+    public  lazy var sureBtn: UIButton = {
         let view = UIButton()
         view.setTitle("Adopt".localeForModule, for: UIControl.State.normal)
         view.backgroundColor = UIColor.init(hexStr: "#ff5251")

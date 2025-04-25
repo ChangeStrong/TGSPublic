@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by luo luo on 2023/6/5.
+  
+*/
+"Sure"="確定";
+" second"="秒";
+" minutes"="分";
+" hour"="時間";
+" day"="日";
+" month"="月";
+" year"="年";
+"just now"="たった今";
+" minutes ago"="分前";
+" hour ago"="時間前";
+" day ago"="日前";
+" month ago"="か月前";
+" year ago"="年前";
+"Adopt"="採用";
+"Cancel"="キャンセル";

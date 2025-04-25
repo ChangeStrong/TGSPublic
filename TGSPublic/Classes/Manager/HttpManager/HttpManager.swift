@@ -58,6 +58,119 @@ public func TGFetchDefaultHeadUrl() -> String {
     return TGGetHttpBaseUrl() + "resources/images/defaultAdminHead.png";
 }
 
+public func TGFetchTutorialUrl() ->String{
+    var tempUrl =  TGGetHttpBaseUrl() + "views/protocol/";
+     switch TGGlobal.currentLanguage() {
+     case .chinese:
+         tempUrl += "tutorial/tutorial_zh.html"
+         break
+     case .english:
+         tempUrl += "tutorial/tutorial_en.html"
+         break
+     case .russian:
+         tempUrl += "tutorial/tutorial_ru.html"
+         break
+     case .korean:
+         tempUrl += "tutorial/tutorial_ko.html"
+         break
+     case .japanese:
+         tempUrl += "tutorial/tutorial_ja.html"
+         break
+     case .spanish:
+         tempUrl += "tutorial/tutorial_es.html"
+         break
+     case .spanishLa:
+         tempUrl += "tutorial/tutorial_la.html"
+         break
+     }
+    return tempUrl
+}
+
+public func TGFetchProtocolPrivateUrl() ->String{
+    var tempUrl =  TGGetHttpBaseUrl() + "views/protocol/";
+     switch TGGlobal.currentLanguage() {
+     case .chinese:
+         tempUrl += "private/private_zh.html"
+         break
+     case .english:
+         tempUrl += "private/private_en.html"
+         break
+     case .russian:
+         tempUrl += "private/private_ru.html"
+         break
+     case .korean:
+         tempUrl += "private/private_ko.html"
+         break
+     case .japanese:
+         tempUrl += "private/private_ja.html"
+         break
+     case .spanish:
+         tempUrl += "private/private_es.html"
+         break
+     case .spanishLa:
+         tempUrl += "private/private_la.html"
+         break
+     }
+    return tempUrl
+}
+
+public func TGFetchProtocolServiceUrl() ->String{
+    var tempUrl =  TGGetHttpBaseUrl() + "views/protocol/";
+     switch TGGlobal.currentLanguage() {
+     case .chinese:
+         tempUrl += "service/service_zh.html"
+         break
+     case .english:
+         tempUrl += "service/service_en.html"
+         break
+     case .russian:
+         tempUrl += "service/service_ru.html"
+         break
+     case .korean:
+         tempUrl += "service/service_ko.html"
+         break
+     case .japanese:
+         tempUrl += "service/service_ja.html"
+         break
+     case .spanish:
+         tempUrl += "service/service_es.html"
+         break
+     case .spanishLa:
+         tempUrl += "service/service_la.html"
+         break
+     }
+    return tempUrl
+}
+
+public func TGFetchProtocolspecificationUrl() ->String{
+    var tempUrl =  TGGetHttpBaseUrl() + "views/protocol/";
+     switch TGGlobal.currentLanguage() {
+     case .chinese:
+         tempUrl += "specification/specification_zh.html"
+         break
+     case .english:
+         tempUrl += "specification/specification_en.html"
+         break
+     case .russian:
+         tempUrl += "specification/specification_ru.html"
+         break
+     case .korean:
+         tempUrl += "specification/specification_ko.html"
+         break
+     case .japanese:
+         tempUrl += "specification/specification_ja.html"
+         break
+     case .spanish:
+         tempUrl += "specification/specification_es.html"
+         break
+     case .spanishLa:
+         tempUrl += "specification/specification_la.html"
+         break
+     }
+    return tempUrl
+}
+
+
 public enum HttpAPIManager{
     case DownloadFullAddress(Dictionary<String, Any>) // 添加游客
     case GetHomeDetail(Int)  // 获取详情页
@@ -91,7 +204,11 @@ extension HttpAPIManager: TargetType {
                 dict0["platform"] = "iOS";
             }
             dict0["deviceType"] = TGGlobal.deviceType()
-            dict0["deviceLanguage"] = "varialble_Local_Laungue".localized
+            var temp = "en"
+            if let preferredLanguage = Locale.preferredLanguages.first {
+                temp = preferredLanguage;
+            }
+            dict0["deviceLanguage"] = temp
             return dict0
 //            break
         }

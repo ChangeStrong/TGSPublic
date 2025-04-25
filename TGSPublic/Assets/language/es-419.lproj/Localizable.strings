@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by luo luo on 2023/6/5.
+  
+*/
+"Sure"="Aceptar";
+" second"="segundo";
+" minutes"="minutos";
+" hour"="hora";
+" day"="día";
+" month"="mes";
+" year"="año";
+"just now"="justo ahora";
+" minutes ago"="hace minutos";
+" hour ago"="hace una hora";
+" day ago"="hace un día";
+" month ago"="hace un mes";
+" year ago"="hace un año";
+"Adopt"="Adoptar";
+"Cancel"="Cancelar";

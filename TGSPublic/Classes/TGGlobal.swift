@@ -435,6 +435,46 @@ public class TGGlobal:NSObject{
           return  "ios"
         }
     }
+    public enum TGLanguage:String {
+    case english = "english"
+    case chinese = "chinese"
+    case russian = "russian"
+    case korean = "korean"
+    case japanese = "japanese"
+    case spanish = "spanish"
+    case spanishLa = "Spain (Latin America)"
+    }
+    public class func currentLanguage() -> TGLanguage{
+        // 获取当前设备的首选语言
+        if let preferredLanguage = Locale.preferredLanguages.first {
+            // 分离语言和区域
+            let languageCode = Locale(identifier: preferredLanguage).languageCode ?? "未知" //
+            let scriptCode = Locale.current.scriptCode // "Hans" 或 "Hant"
+            let regionCode = Locale.current.regionCode ?? "未知区域"//CN
+            
+            print("languageCode: \(languageCode) scriptCode：\(scriptCode)  regionCode：\(regionCode)")
+            switch languageCode {
+            case "zh":
+                return .chinese
+            case "ru":
+                return .russian
+            case "es":
+                if preferredLanguage.contains("es-419")  {
+                    //西班牙（拉丁美洲）
+                    return .spanishLa
+                }
+                return .spanish
+            case "ja":
+                return .japanese
+            case "ko":
+                return .korean
+            default:
+                break
+            }
+        }
+        //未获取到
+        return .english;
+    }
     
     //转16进制字符显示
     public class func coventToHex<T:CVarArg> (_ data:[T]) -> String {

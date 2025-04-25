@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by luo luo on 2023/6/5.
+  
+*/
+"varialble_Local_Laungue"="Chinese";
+//"Previous"="上一章";
+//"Next"="下一章";
+//"Catalog"="目录";
+//"Setting"="设置";
+//"it is empty"="空空如也";
+//"Theme"="主题";
+//"Word"="文字";
+//"Word Color"="文字颜色";
+//"Start"="开始";
+//"Merge Content"="合并内容";
+//"Chapter %d"="第%d章";
+//"Listen Book"="听书";
+//"Background Color"="背景颜色";
+//"Speaking Speed"="语速";
+//"Current font size:"="当前字号:";
+//"Mode"="模式";
+//"Whether to switch to page turning mode"="是否切换为翻页模式";
+"Sure"="确定";
+" second"="秒";
+" minutes"="分";
+" hour"="时";
+" day"="日";
+" month"="月";
+" year"="年";
+"just now"="刚刚";
+" minutes ago"="分前";
+" hour ago"="时前";
+" day ago"="天前";
+" month ago"="个月前";
+" year ago"="年前";
+"Adopt"="采用";
+"Cancel"="取消";
+

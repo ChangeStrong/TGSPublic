@@ -220,44 +220,123 @@ public extension String{
         
         return resultString
     }
-    //从文章中提取遇到第一行有可见字符的字符串--用来给文件命名使用
-    func fetchFirstLineStr() -> String {
-        var tempStr = self.replacingOccurrences(of: "￼", with: "")//移除其中的图片占位符
+    //提取字符串中从遇到的第一个中文或英文字符开始，并移除末尾非中文或英文的所有字符,并且保留数字
+    func filterChineseAndEnglishCharacters2() -> String {
+        // 定义一个正则表达式模式，匹配中文、英文字符和数字
+        let validCharacterPattern = "[\\u4e00-\\u9fa5a-zA-Z0-9]"
+        
+        // 将输入字符串转换为字符数组，方便逐字符处理
+        var characters = Array(self)
+        var startIndex: Int? = nil
+        var endIndex: Int? = nil
+        
+        // 找到第一个有效字符的位置（中文、英文或数字）
+        for (index, char) in characters.enumerated() {
+            if String(char).range(of: validCharacterPattern, options: .regularExpression) != nil {
+                startIndex = index
+                break
+            }
+        }
+        
+        // 如果没有找到任何有效字符，返回空字符串
+        guard let validStartIndex = startIndex else {
+//            var   tempStr = self
+//            if self.count > 50 {
+//                //名字过长只取前五十个
+//                tempStr = String(self[self.startIndex..<self.index(self.startIndex, offsetBy: 50)])
+//            }
+//            //移除空格这些
+//            tempStr = tempStr.trimmingCharacters(in: .whitespacesAndNewlines)
+            return self
+        }
+        
+        // 从字符串末尾开始，找到最后一个有效字符的位置
+        for i in stride(from: characters.count - 1, through: validStartIndex, by: -1) {
+            if String(characters[i]).range(of: validCharacterPattern, options: .regularExpression) != nil {
+                endIndex = i
+                break
+            }
+        }
+        
+        // 如果没有有效的结束位置，说明字符串中只有一个有效字符
+        let validEndIndex = endIndex ?? validStartIndex
+        
+        // 提取有效子字符串
+        let result = String(characters[validStartIndex...validEndIndex])
+        return result
+    }
+    //移除不兼容iOS和安卓的文件命名字符
+    func sanitizeFileNameCrossPlatform() -> String {
+        // 定义跨平台非法字符集合
+        let invalidCharacters = CharacterSet(charactersIn: "/\\?%*|\"<>:")
+        
+        // 移除非法字符
+        let sanitizedString = self
+            .components(separatedBy: invalidCharacters)
+            .joined()
+        
+        // 去掉首尾空白字符
+        return sanitizedString.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    //此方法会保留空格和图片占位符号
+    func fetchFirstLineStr2() -> String {
+        var tempStr = self.replacingOccurrences(of: "￼", with: "") // 移除其中的图片占位符
+        
         // 将字符串按换行符分割成数组
         let lines = tempStr.components(separatedBy: .newlines)
+        
         var firstLine: String = ""
-        let customWhitespaceSet = CharacterSet(charactersIn: "\u{FFC}\u{160}\u{2000}-\u{200F}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}")
-        for line in lines {
-
-            let line1 = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            let line2 = line1.filterChineseAndEnglishCharacters()
-            if !line2.isEmpty {
-                // 找到首行有可见字符的行
-                firstLine = line2
+        var foundVisibleCharacter = false
+        
+        for tempStr in lines {
+            // 去除首尾的空白字符-和不兼容iOS和安卓文件命名的字符
+            let  line = tempStr.sanitizeFileNameCrossPlatform()
+            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
+             
+            // 检查是否有可见字符
+            if !trimmedLine.isEmpty {
+                // 找到第一个包含可见字符的行
+                firstLine = line
+                
+                
+                // 从第一个可见字符开始保留原始字符串（包括后续的空格）
+                var startIndex: String.Index?
+                for (index, char) in line.enumerated() {
+                    if !char.isWhitespace {
+                        startIndex = line.index(line.startIndex, offsetBy: index)
+                        break
+                    }
+                }
+                
+                if let startIndex = startIndex {
+                    firstLine = String(line[startIndex...])
+                }
+                
+                foundVisibleCharacter = true
                 break // 找到包含可见字符的行，跳出循环
             }
         }
         
-        // 获取第一行
-        if firstLine.isEmpty == false {
-            // 移除字符串首尾的空格和换行符
-//            let trimmedFirstLine = firstLine.trimmingCharacters(in: .whitespacesAndNewlines)
-            tempStr = firstLine
-            print(tempStr)  // 输出: "Hello, World!"
-        } else {
-            //字符串没有换行符
-            if self.count > 50 {
-                //名字过长只取前五十个
+        // 如果没有找到任何可见字符的行，则处理整个字符串
+        if !foundVisibleCharacter {
+            if tempStr.count > 50 {
+                // 名字过长只取前五十个字符
                 tempStr = String(tempStr[tempStr.startIndex..<tempStr.index(tempStr.startIndex, offsetBy: 50)])
             }
             
-            //移除空格这些
+            // 去除首尾的空白字符
             tempStr = tempStr.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if tempStr.isEmpty {
+                tempStr = "unkhow"
+            }
+            
+            return tempStr
         }
-        if tempStr.isEmpty {
-            tempStr = "unkhow";
-        }
-        return tempStr;
+        
+        // 返回找到的第一行（保留了第一个可见字符及其后的所有内容，包括空格）
+        return firstLine
     }
     
 }
