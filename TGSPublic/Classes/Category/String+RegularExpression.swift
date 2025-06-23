@@ -110,7 +110,33 @@ public extension String {
             }
     }
     ///获取三个大括号中的内容{{{xxx}}}
+    func fetchContentOfThreeBrace2() -> String {
+        let text = self.trimmingCharacters(in: .whitespacesAndNewlines)
+        let pattern = #"\{{3}(.*?)\}{3}"#
+        
+        do {
+            let regex = try NSRegularExpression(pattern: pattern)
+            let nsRange = NSRange(text.startIndex..<text.endIndex, in: text)
+            
+            if let match = regex.firstMatch(in: text, range: nsRange),
+               let range = Range(match.range(at: 1), in: text) {
+                return String(text[range])
+            }
+        } catch {
+            print("正则表达式失败: \(error.localizedDescription)")
+        }
+        
+        // 备用方案
+        if let startRange = text.range(of: "{{{"),
+           let endRange = text.range(of: "}}}") {
+            return String(text[startRange.upperBound..<endRange.lowerBound])
+        }
+        
+        return ""
+    }
     func fetchContentOfThreeBrace() -> String {
+        let text  = self.replacingOccurrences(of: "\n", with: "")
+            .replacingOccurrences(of: "\r", with: "")
         // 创建一个正则表达式来匹配被三个大括号包围的文本
         let pattern = #"\{\{\{(.*?)\}\}\}"#
         do {
@@ -118,22 +144,22 @@ public extension String {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
             
             // 定义搜索范围为整个字符串
-            let nsRange = NSRange(self.startIndex..<self.endIndex, in: self)
+            let nsRange = NSRange(text.startIndex..<text.endIndex, in: text)
             
             // 查找所有匹配项
-            let matches = regex.matches(in: self, options: [], range: nsRange)
+            let matches = regex.matches(in: text, options: [], range: nsRange)
             
             // 遍历所有匹配项并打印结果
             for match in matches {
-                if let range = Range(match.range(at: 1), in: self) {
-                    let matchedText = self[range]
+                if let range = Range(match.range(at: 1), in: text) {
+                    let matchedText = text[range]
 //                    print("正则匹配到的总结文字是：\(matchedText)")
                     return "\(matchedText)"
                 }
             }
             
-            if let range = self.range(of: "{{{"),let range2 = self.range(of: "}}}") {
-                let  tempStr2 = String(self[range.upperBound..<range2.lowerBound])
+            if let range = text.range(of: "{{{"),let range2 = text.range(of: "}}}") {
+                let  tempStr2 = String(text[range.upperBound..<range2.lowerBound])
                 print("正则未获取到 fetch by handle is \(String(tempStr2))")
                 return tempStr2;
             }else{
@@ -144,5 +170,45 @@ public extension String {
         }
         return ""
     }
+    
+    //获取三个大括号外的所有字符
+    func fetchExtractOutsideBraces() -> String {
+        // 正则匹配 {{{...}}}
+        let pattern = "\\{\\{\\{.*?\\}\\}\\}"
+        
+        // 创建正则表达式
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return self
+        }
+        
+        let nsRange = NSRange(location: 0, length: self.utf16.count)
+        
+        // 找到所有 {{{...}}} 的范围
+        let matches = regex.matches(in: self, options: [], range: nsRange)
+        
+        // 将原字符串转为 NSString 方便截取
+        let nsInput = self as NSString
+        
+        var result = ""
+        var lastIndex = 0
+        
+        for match in matches {
+            // 取出匹配前的部分
+            if match.range.location > lastIndex {
+                let substring = nsInput.substring(with: NSRange(location: lastIndex, length: match.range.location - lastIndex))
+                result += substring
+            }
+            // 更新位置
+            lastIndex = match.range.location + match.range.length
+        }
+        
+        // 添加最后一个 }}} 后面的部分
+        if lastIndex < self.count {
+            result += nsInput.substring(from: lastIndex)
+        }
+        
+        return result
+    }
+    
     
 }

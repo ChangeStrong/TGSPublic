@@ -429,5 +429,41 @@ public extension UIImage{
             UIGraphicsEndImageContext()
             return image
         }
+    
+    //裁剪图片的正中心
+    func centerCroppedSquare() -> UIImage? {
+            let originalSize = self.size
+            let scale = self.scale
+            
+            // 获取图像原始像素尺寸（考虑 scale）
+            let cgImage = self.cgImage!
+            let width = CGFloat(cgImage.width)
+            let height = CGFloat(cgImage.height)
+            
+            // 找出最大边长作为裁剪尺寸
+            let cropDimension = min(width, height)
+            
+            // 计算裁剪区域（以中心为基准）
+            let x = (width  - cropDimension) / 2.0
+            let y = (height - cropDimension) / 2.0
+            let cropRect = CGRect(x: x, y: y, width: cropDimension, height: cropDimension)
+            
+            // 进行裁剪
+            if let croppedCgImage = cgImage.cropping(to: cropRect) {
+                // 注意：将裁剪后的图像按原始 image 的 scale 缩放成原 size
+                let croppedImage = UIImage(cgImage: croppedCgImage, scale: scale, orientation: self.imageOrientation)
+                
+                // 可选：缩放回原始 UIImage 的 size
+                return croppedImage.resized(to: originalSize)
+            }
+            
+            return nil
+        }
+    
+    func resized(to size: CGSize) -> UIImage {
+            return UIGraphicsImageRenderer(size: size).image { _ in
+                draw(in: CGRect(origin: .zero, size: size))
+            }
+        }
      
 }

@@ -39,6 +39,9 @@ public func TGGetQiniuDomainBaseUrl() -> String{
     case 40:
         //
         return "http://hotcommunity.yeast.plus/";
+    case 60:
+        //
+        return "http://hotcommunity.yeast.plus/";
 //        break
     default:
         break

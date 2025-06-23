@@ -195,6 +195,9 @@ func formatSimpleExpress() -> String{
     static func fetchCurrentSeconds() -> Int {
        return Int(Date().timeIntervalSince1970)
     }
+    static func fetchCurrentSeconds2() -> Double {
+       return Date().timeIntervalSince1970
+    }
     
     static func fetchCurrentMilliseconds() -> TimeInterval {
        return Date().timeIntervalSince1970

@@ -456,7 +456,7 @@ open class TGBaseVC: UIViewController {
         let scale:CGFloat = 22/40.0;
         view1.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.navBar).offset(-9)
-            make.left.equalTo(self.navBar).offset(TGX(20))
+            make.left.equalTo(self.navBar).offset(TGX(15))
             make.size.equalTo(CGSize.init(width: 20*scale, height: 20))
         }
         
@@ -482,7 +482,7 @@ open class TGBaseVC: UIViewController {
         self.navBar.addSubview(view)
         view.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.navBar).offset(-9)
-            make.left.equalTo(self.navBar).offset(TGX(20))
+            make.left.equalTo(self.navBar).offset(TGX(15))
             make.size.equalTo(CGSize.init(width: TGX(60), height: 25))
         }
         return view
@@ -498,7 +498,7 @@ open class TGBaseVC: UIViewController {
         self.navBar.addSubview(view)
         view.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.navBar).offset(-9)
-            make.right.equalTo(self.navBar).offset(TGX(-20))
+            make.right.equalTo(self.navBar).offset(TGX(-15))
             make.size.equalTo(CGSize.init(width: TGX(60), height: 25))
         }
         return view
@@ -508,6 +508,7 @@ open class TGBaseVC: UIViewController {
         let label = UILabel()
         label.textColor = UIColor.black
         label.font = TGFontBold(18)
+        label.lineBreakMode = .byTruncatingMiddle
         label.textAlignment = .center
         self.navBar.addSubview(label)
         label.snp.makeConstraints { (make) in

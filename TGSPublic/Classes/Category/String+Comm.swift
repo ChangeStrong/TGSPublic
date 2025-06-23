@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CommonCrypto
 let KUrlCodingReservedCharacters = "!*'();:|@&=+$,/?%#[]{}"
 public extension String{
     /// url编码
@@ -30,6 +31,18 @@ public extension String{
         }
         return encodedPath
     }
+    
+    func md5ForUrl() -> String {
+            let data = Data(self.utf8)
+            let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+                var hash: [UInt8] = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+                CC_MD5(bytes.baseAddress, CC_LONG(data.count), &hash)
+                return hash
+            }
+            
+            return hash.map { String(format: "%02x", $0) }.joined()
+        }
+    
     //将链接替换为文件名
     func replaceUrlToFileName() -> String {
 //        let filename = self.replacingOccurrences(of: "/\\:*?\"<>|", with: "_")

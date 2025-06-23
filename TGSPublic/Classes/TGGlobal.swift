@@ -452,7 +452,7 @@ public class TGGlobal:NSObject{
             let scriptCode = Locale.current.scriptCode // "Hans" 或 "Hant"
             let regionCode = Locale.current.regionCode ?? "未知区域"//CN
             
-            print("languageCode: \(languageCode) scriptCode：\(scriptCode)  regionCode：\(regionCode)")
+//            print("languageCode: \(languageCode) scriptCode：\(scriptCode)  regionCode：\(regionCode)")
             switch languageCode {
             case "zh":
                 return .chinese
