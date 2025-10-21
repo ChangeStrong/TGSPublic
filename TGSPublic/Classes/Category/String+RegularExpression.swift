@@ -48,11 +48,17 @@ public extension String {
         }
         return nil
     }
-    
+    /*
     func isLink() -> Bool {
         let urlRegex = "^(http|https)://[a-zA-Z0-9\\.-]+\\.[a-zA-Z]{2,4}(:[0-9]{1,5})?(/.*)?$"
         let urlPredicate = NSPredicate(format: "SELF MATCHES %@", urlRegex)
         return urlPredicate.evaluate(with: self)
+    } */
+    
+    func isLink() -> Bool {
+        guard let url = URL(string: self) else { return false }
+        // 检查是否有 http 或 https scheme
+        return ["http", "https"].contains(url.scheme?.lowercased())
     }
     //https://www.example.com 或者 example.com 也算对
     func isValidURL() -> Bool {

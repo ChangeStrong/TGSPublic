@@ -8,17 +8,17 @@
 import Foundation
 import ProgressHUD
 public extension ProgressHUD {
-      class func showMessageAuto(_ text:String) -> Void {
+    class func showMessageAuto(_ text:String,_ duration:Int = 2) -> Void {
         if Thread.current != Thread.main {
             DispatchQueue.main.async {
                 ProgressHUD.animate(text)
-                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(1000*2)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(1000*duration)) {
                     ProgressHUD.dismiss()
                 }
             }
         }else{
             ProgressHUD.animate(text)
-            DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(1000*2)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(1000*duration)) {
                 ProgressHUD.dismiss()
             }
         }

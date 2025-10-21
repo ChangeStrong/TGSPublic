@@ -33,6 +33,7 @@ public var TGColorLine = UIColor.init(hexStr: "EFEFEF")
 public var TGColorLineGraySystem = UIColor.init(hexStr: "a9adae")
 //文字主颜色
 public var TGColorTextMain = UIColor.black
+public var TGColorTextGray3 = UIColor.init(hexStr: "#333333")
 public var TGColorTextGray6 = UIColor.init(hexStr: "6F6F6F")
 public var TGColorTextGray8 = UIColor.init(hexStr: "858585")//偏白一点的灰
 public var TGColorBgCard = UIColor.init(hexStr: "feb3ab")//淡粉色
@@ -438,11 +439,18 @@ public class TGGlobal:NSObject{
     public enum TGLanguage:String {
     case english = "english"
     case chinese = "chinese"
+    case chineseTraditional = "traditional Chinese"
     case russian = "russian"
     case korean = "korean"
     case japanese = "japanese"
     case spanish = "spanish"
     case spanishLa = "Spain (Latin America)"
+    case italian = "italian"
+    case vietnamese = "vietnamese"
+    case thai = "thai"
+    case hindi = "hindi"
+       
+        
     }
     public class func currentLanguage() -> TGLanguage{
         // 获取当前设备的首选语言
@@ -452,10 +460,19 @@ public class TGGlobal:NSObject{
             let scriptCode = Locale.current.scriptCode // "Hans" 或 "Hant"
             let regionCode = Locale.current.regionCode ?? "未知区域"//CN
             
-//            print("languageCode: \(languageCode) scriptCode：\(scriptCode)  regionCode：\(regionCode)")
+//            print("languageCode: \(languageCode) scriptCode：\(scriptCode)  regionCode：\(regionCode) preferredLanguage=\(preferredLanguage)")
             switch languageCode {
             case "zh":
+                //languageCode: zh scriptCode：nil  regionCode：CN
+                //zh-Hant-MO  澳门 zh-Hant-TW 台湾 yue-Hant-CN 广东 zh-Hant-HK 香港
+                if preferredLanguage.contains("zh-Hant") {
+                    //繁体中文
+                    return .chineseTraditional
+                }
                 return .chinese
+            case "yue":
+                //粤语繁体
+                return .chineseTraditional
             case "ru":
                 return .russian
             case "es":
@@ -468,12 +485,56 @@ public class TGGlobal:NSObject{
                 return .japanese
             case "ko":
                 return .korean
+            case "it":
+                //it-CN
+                return .italian
+            case "vi":
+                //越南
+                return .vietnamese
+            case "th":
+                //泰语
+                return .thai
+            case "hi":
+                //印地语
+                return .hindi
             default:
                 break
             }
         }
         //未获取到
         return .english;
+    }
+    
+    public class  func fetchChinesePromotoByLaunguage() -> String {
+        var tempStr = "英文"
+        let launguage = TGGlobal.currentLanguage()
+        switch launguage {
+        case .english:
+            break
+        case .chinese:
+            tempStr = "中文"
+        case .russian:
+            tempStr = "俄文"
+        case .korean:
+            tempStr = "韩文"
+        case .japanese:
+            tempStr = "日文"
+        case .spanish:
+            tempStr = "西班牙文"
+        case .spanishLa:
+            tempStr = "西班牙文"
+        case .chineseTraditional:
+            tempStr = "繁体中文"
+        case .italian:
+            tempStr = "意大利文"
+        case .vietnamese:
+            tempStr = "越南文"
+        case .thai:
+            tempStr = "泰文"
+        case .hindi:
+            tempStr = "印地语"
+        }
+        return tempStr
     }
     
     //转16进制字符显示

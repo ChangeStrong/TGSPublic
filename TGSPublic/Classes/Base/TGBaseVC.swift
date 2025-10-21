@@ -406,6 +406,18 @@ open class TGBaseVC: UIViewController {
     
     
     // MARK: 背景
+  open  lazy var bgBigView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage.init(named: "bg_big")
+        view.contentMode = .scaleAspectFill
+        self.view.addSubview(view)
+        view.clipsToBounds = true;
+        view.snp.makeConstraints { (make) in
+            make.edges.equalTo(self.view)
+        }
+        self.view.sendSubviewToBack(view)
+        return view
+    }()
     //添加背景
     open func addBgImageViewFor(view:UIView,fatherView:UIView,imageStr:String)-> UIImageView{
         //无边框多余

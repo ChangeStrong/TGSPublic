@@ -1,6 +1,6 @@
 {
   "name": "TGSPublic",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "summary": "swift公共组件",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/ChangeStrong/TGSPublic",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/ChangeStrong/TGSPublic.git",
-    "tag": "0.2.1"
+    "tag": "0.2.2"
   },
   "swift_versions": "5.0",
   "platforms": {
@@ -52,6 +52,18 @@
 
     ],
     "SnapKit": [
+
+    ],
+    "UITextView+Placeholder": [
+
+    ],
+    "Kingfisher": [
+
+    ],
+    "MJRefresh": [
+
+    ],
+    "EmptyDataSet-Swift": [
 
     ]
   },

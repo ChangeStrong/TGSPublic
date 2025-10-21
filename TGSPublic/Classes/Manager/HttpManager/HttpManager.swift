@@ -10,11 +10,13 @@ import Foundation
 import Moya
 
 public var TGHttpBaseUrlPath = "http://116.62.172.2:80/"
+public var TGHttpBaseDomainUrlPath = "http://yeast.plus:80/"
+public var TGPlatformatType:Int = 16;//平台类型 16 - 酵母菌 40- 写诗助手 60-场景英语
 public var TGUploadFileBasseAdressType:Int = 16//默认酵母菌国内
 public func TGGetHttpBaseUrl() -> String {
     if TGAppEnviroment == 0 {
         return "http://127.0.0.1:8888/Comic/"
-//        return "http://192.168.2.178:8888/Comic/"
+//        return "http://192.168.83.97:8888/Comic/"
     }
         return TGHttpBaseUrlPath
 }
@@ -54,7 +56,7 @@ public func TGGetHttpDomainUrl() -> String {
     if TGAppEnviroment == 0 {
         return TGGetHttpBaseUrl();
     }
-    return "http://yeast.plus:80/" //酵母菌国内
+    return TGHttpBaseDomainUrlPath
 }
 
 public func TGFetchDefaultHeadUrl() -> String {
@@ -85,12 +87,23 @@ public func TGFetchTutorialUrl() ->String{
      case .spanishLa:
          tempUrl += "tutorial/tutorial_la.html"
          break
+     case .chineseTraditional:
+         tempUrl += "tutorial/tutorial_zh.html"
+     default:
+         tempUrl += "tutorial/tutorial_en.html"
+     break
      }
+   
     return tempUrl
 }
 
 public func TGFetchProtocolPrivateUrl() ->String{
     var tempUrl =  TGGetHttpBaseUrl() + "views/protocol/";
+    if TGPlatformatType == 60 {
+        tempUrl += "sceneenglish/"
+//        tempUrl += "private/private_en.html"
+//        return tempUrl
+    }
      switch TGGlobal.currentLanguage() {
      case .chinese:
          tempUrl += "private/private_zh.html"
@@ -113,12 +126,35 @@ public func TGFetchProtocolPrivateUrl() ->String{
      case .spanishLa:
          tempUrl += "private/private_la.html"
          break
+     case .chineseTraditional:
+         tempUrl += "private/private_zh_tr.html"
+     case .italian:
+         tempUrl += "private/private_it.html"
+         break
+     case .vietnamese:
+         tempUrl += "private/private_vi.html"
+         break
+     case .thai:
+         tempUrl += "private/private_thai.html"
+         break
+     case .hindi:
+         tempUrl += "private/private_hi.html"
+         break
+//     default:
+//         tempUrl += "private/private_en.html"
+//         break
      }
+    
     return tempUrl
 }
 
 public func TGFetchProtocolServiceUrl() ->String{
     var tempUrl =  TGGetHttpBaseUrl() + "views/protocol/";
+    if TGPlatformatType == 60 {
+        tempUrl += "sceneenglish/"
+//        tempUrl += "service/service_en.html"
+//        return tempUrl
+    }
      switch TGGlobal.currentLanguage() {
      case .chinese:
          tempUrl += "service/service_zh.html"
@@ -141,6 +177,20 @@ public func TGFetchProtocolServiceUrl() ->String{
      case .spanishLa:
          tempUrl += "service/service_la.html"
          break
+     case .italian:
+         tempUrl += "service/service_it.html"
+         break
+     case .chineseTraditional:
+         tempUrl += "service/service_zh_tr.html"
+         break
+//     default:
+//         break
+     case .vietnamese:
+         tempUrl += "service/service_vi.html"
+     case .thai:
+         tempUrl += "service/service_thai.html"
+     case .hindi:
+         tempUrl += "service/service_hi.html"
      }
     return tempUrl
 }
@@ -168,6 +218,8 @@ public func TGFetchProtocolspecificationUrl() ->String{
          break
      case .spanishLa:
          tempUrl += "specification/specification_la.html"
+         break
+     default:
          break
      }
     return tempUrl

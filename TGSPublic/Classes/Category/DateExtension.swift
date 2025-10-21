@@ -156,6 +156,25 @@ func formatSimpleExpress() -> String{
         return result
     }
     
+    static func fetchHourTimeBySeconds(_ timeInterval:TimeInterval) -> String {
+         var result:String = ""
+         var temp:Double = 0
+         if timeInterval/60 < 1 {
+             result =  "\(Int(temp))" + " second".localeForModule
+         }else if (timeInterval/60) < 60{
+             temp = timeInterval/60
+             result = "\(Int(temp))" + " minutes".localeForModule
+         }else if timeInterval/(60 * 60) < 24 {
+             
+             temp = timeInterval/(60*60)
+             result = "\(Int(temp))" + " hour".localeForModule
+         }else{
+             temp = timeInterval/(60*60)
+             result = "\(Int(temp))" + " hour".localeForModule
+         }
+         return result
+     }
+    
     
     func distanceNowTime() -> String {
         let currentDate:Date = Date();
